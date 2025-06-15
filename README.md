@@ -1,4 +1,4 @@
 # Machine Learning Model Code
 ## SRCNN
-## Text to Speech
+## TTS(Text to Speech)
 - https://github.com/MATEN0920/TTS
