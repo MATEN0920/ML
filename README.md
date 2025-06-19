@@ -2,5 +2,5 @@
 ## SRCNN
 ## TTS(Text to Speech)
 - https://github.com/MATEN0920/TTS
-## YOLO V5
-- tagging
+## YOLO v5
+- Object Detection
