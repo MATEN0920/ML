@@ -4,4 +4,3 @@
 - https://github.com/MATEN0920/TTS
 ## YOLO v5(Object Detection)
 ## Image Stitching
-- 추가 예정
