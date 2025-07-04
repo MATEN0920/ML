@@ -5,3 +5,4 @@
 ## Image Stitching
 ## Object Detection
 - YOLOv5
+- Memo Writing
