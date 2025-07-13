@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<link  href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" rel="stylesheet">
+<style>
+html,body,#pan{height:100%;margin:0;}
+</style>
+</head><body><div id="pan"></div><script>
+pannellum.viewer('pan', {
+  type: 'equirectangular',          // ✅ 수정된 부분
+  panorama: 'result_image.jpg',     // 2:1 비율로 만든 이미지여야 함
+  autoLoad: true,
+  pitch: 0,
+  hfov: 90,
+  compass: true,
+  autoRotate: -2
+});
+</script></body></html>
