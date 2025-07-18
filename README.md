@@ -4,5 +4,6 @@
 - https://github.com/MATEN0920/TTS
 ## Image Stitching
 - VR project
+- Video Frame Extraction
 ## Object Detection
 - YOLOv5
