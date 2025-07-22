@@ -5,7 +5,7 @@
 ## Image Stitching
 - VR project
 - Video Frame Extraction
-- Web
+- Web VR Viewer
 ## Object Detection
 - YOLOv5
 
