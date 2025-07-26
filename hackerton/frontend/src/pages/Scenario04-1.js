@@ -194,7 +194,7 @@ const Component1 = () => {
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario09");
+    navigate("/scenario05");
   };
 
   const handleNotSureClick = () => {

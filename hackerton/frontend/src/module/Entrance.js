@@ -62,8 +62,6 @@ const Entrance = () => {
           found = true;
           if (box.cls === 1) {
             navigate('../Scenario19');
-          } else if (box.cls === 2) {
-            navigate('/kitchen');
           }
           break;
         }

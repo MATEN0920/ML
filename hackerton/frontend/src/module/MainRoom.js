@@ -37,11 +37,13 @@ const MainRoom = () => {
       autoLoad: true,
       hfov: 120,
       minHfov: 60,
-      maxHfov: 180,
+      maxHfov: 140,
       pitch: 0,
-      yaw: 180,
+      yaw: 0,
       compass: true,
       autoRotate: 0,
+      minPitch: -50, // 아래로 최대 각도 (기본값: -90)
+      maxPitch: 50,  // 위로 최대 각도 (기본값: 90)
     });
 
     let downCoords = null;
@@ -59,7 +61,7 @@ const MainRoom = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('/living');
+            navigate('../Scenario02');
           }
           break;
         }
@@ -75,16 +77,11 @@ const MainRoom = () => {
 
   return (
     <div>
-      <h2>안방 360도 뷰</h2>
       <div
         id="main-pan"
         ref={pannellumRef}
         style={{ width: '100%', height: '500px', border: '2px solid #aaa' }}
       />
-      <p>
-        main_room.jpg VR 화면입니다.<br />
-        버튼을 클릭하면 거실로 이동합니다.
-      </p>
     </div>
   );
 };

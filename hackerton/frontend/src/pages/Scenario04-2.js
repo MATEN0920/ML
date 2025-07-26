@@ -238,7 +238,7 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              햄찌는 햄찌방에 있구나!<br />
+              햄찌는 거실에 있구나!<br />
               알려줘서 고마워. 이제 불이 난<br />
               곳을 함께 찾으러 갈거야.
             </p>

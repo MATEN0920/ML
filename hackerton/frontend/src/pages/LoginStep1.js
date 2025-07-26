@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const wrapperStyle = css`
   width: 100vw;
@@ -156,7 +157,6 @@ const phoneTextField = css`
   font-weight: 500;
   letter-spacing: -0.01em;
   color: #232323;
-
   &::placeholder {
     color: #bdc5d0;
     text-transform: capitalize;
@@ -206,14 +206,16 @@ const navBtnStyle = css`
   padding: 14px 20px;
 `;
 
-const navBtnWithTextStyle = css`
+const navBtnWithTextStyle = (isActive) => css`
   border-radius: 6px;
-  background-color: #d6dbe2;
+  background-color: ${isActive ? "#FF643E" : "#d6dbe2"};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 14px 20px;
+  cursor: ${isActive ? "pointer" : "default"};
+  transition: background-color 0.2s ease;
 `;
 
 const navBtnTextStyle = css`
@@ -222,11 +224,21 @@ const navBtnTextStyle = css`
   line-height: 140%;
   text-transform: capitalize;
   font-weight: 500;
+  color: #fff;
 `;
 
 const Step01Default = () => {
 
     const navigate = useNavigate();
+    const [phone, setPhone] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const isNextEnabled =
+      phone.trim() !== "" &&
+      username.trim() !== "" &&
+      password.trim() !== "" &&
+      confirmPassword.trim() !== "";
   
     const Login = () => {
       navigate("/");
@@ -264,10 +276,12 @@ const Step01Default = () => {
                   <div className={phoneRowStyle}>
                     <div className={phoneInputStyle}>
                       <input
-                        type="text"
-                        className={phoneTextField}
-                        placeholder="-를 제외하고 숫자만 입력해주세요"
-                      />
+                      type="text"
+                      className={phoneTextField}
+                      placeholder="-를 제외하고 숫자만 입력해주세요"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
                     </div>
                   </div>
                 </div>
@@ -281,6 +295,8 @@ const Step01Default = () => {
                         type="text"
                         className={phoneTextField}
                         placeholder="아이디를 입력해주세요"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                       />
                     </div>
                   </div>
@@ -292,9 +308,11 @@ const Step01Default = () => {
                   <div className={phoneRowStyle}>
                     <div className={phoneInputStyle}>
                       <input
-                        type="text"
+                        type="password"
                         className={phoneTextField}
                         placeholder="영어, 숫자 포함 8-20자 이내"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </div>
                   </div>
@@ -306,9 +324,11 @@ const Step01Default = () => {
                   <div className={phoneRowStyle}>
                     <div className={phoneInputStyle}>
                       <input
-                        type="text"
+                        type="password"
                         className={phoneTextField}
                         placeholder="비밀번호를 입력해주세요."
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                       />
                     </div>
                   </div>
@@ -323,7 +343,10 @@ const Step01Default = () => {
           <div className={navBtnStyle} onClick={Login}>
             <div className={navBtnTextStyle}>←</div>
           </div>
-          <div className={navBtnWithTextStyle} onClick={LoginStep2}>
+          <div
+            className={navBtnWithTextStyle(isNextEnabled)}
+            onClick={isNextEnabled ? LoginStep2 : undefined}
+          >
             <div className={navBtnTextStyle}>다음 →</div>
           </div>
         </div>

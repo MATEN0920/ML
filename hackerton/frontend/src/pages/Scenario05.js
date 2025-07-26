@@ -1,13 +1,27 @@
 import { css } from "@emotion/css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LivingRoom from "../module/LivingRoom";
+import MainRoom from '../module/MainRoom';
+import Kitchen from '../module/Kitchen';
+import FirePage from '../module/FirePage';
+import HamzzyRoom from '../module/HamzzyRoom';
+import HamzzyRoom2 from '../module/HamzzyRoom2';
+import Entrance from '../module/Entrance';
+import Out from '../module/Out';
+
 
 const styles = {
   container: css`
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    min-height: 834px;
     position: relative;
-    background-color: #fefefe;
-    height: 834px;
-    overflow: hidden;
+    background-color: #363d47;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: left;
     font-size: 24px;
     color: #363d47;
@@ -70,6 +84,7 @@ const styles = {
     width: 404px;
     height: 404px;
     object-fit: cover;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   headerTextBox: css`
     position: absolute;
@@ -134,6 +149,7 @@ const styles = {
     left: 40px;
     display: flex;
     flex-direction: column;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechBubble: css`
     box-shadow: 0px 5px 8.2px rgba(0, 0, 0, 0.2);
@@ -142,17 +158,19 @@ const styles = {
     display: flex;
     justify-content: center;
     padding: 20px 30px;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechText: css`
     letter-spacing: -0.01em;
     line-height: 135%;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   triangleImage: css`
     width: 55.9px;
     height: 28px;
     margin-top: -8px;
   `,
-      alertOverlay: css`
+  alertOverlay: css`
     position: fixed;
     top: 0;
     left: 0;
@@ -188,8 +206,9 @@ const Component1 = () => {
   };
   return (
     <div className={styles.container}>
-      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오pg5배경.png" alt="" />
-
+      <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
+        <HamzzyRoom2 />
+      </div> 
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
         <div className={styles.profileTextBox}>
@@ -222,7 +241,7 @@ const Component1 = () => {
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
               우선, 방 밖으로 나가야해.<br />
-              방문이 열려있는지 확인해볼까?
+              거실로 나가보자!
             </p>
           </b>
         </div>

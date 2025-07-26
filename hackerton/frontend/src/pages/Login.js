@@ -16,7 +16,7 @@ const wrapper = css`
 const container = css`
   width: 1194px;
   height: 834px;
-  background-color: #f6f7f9;
+  background-color: #fefefe;
   border-radius: 12px;
   position: relative;
   font-family: Pretendard;
@@ -60,28 +60,32 @@ const inputBox = css`
   height: 52px;
   border-radius: 6px;
   background-color: #f6f7f9;
-  border: 1px solid #eaecf0;
+  border: 1px solid #bdc5d0;
   font-size: 16px;
-  color: #bdc5d0;
   padding: 0 16px;
   display: flex;
   align-items: center;
+    &::placeholder {
+    color: #bdc5d0;
+    text-transform: capitalize;
+  }
 `;
 
 // 로그인 버튼 스타일
-const loginButton = css`
+const loginButton = (isActive) => css`
   width: 547.24px;
   height: 52px;
   border-radius: 6px;
-  background-color: #d6dbe2;
+  background-color: ${isActive ? "#FF643E" : "#eaecf0"};
   font-size: 18px;
   font-weight: 500;
-  color: #fefefe;
+  color: ${isActive ? "#eaecf0" : "#232323"};
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  border: none;
+  cursor: ${isActive ? "pointer" : "default"};
+  border: 1px solid ${isActive ? "transparent" : "#dcdcdc"};
+  transition: background-color 0.2s ease, color 0.2s ease;
 `;
 
 // 하단 링크 텍스트
@@ -101,8 +105,10 @@ const Login = () => {
     const navigate = useNavigate();
       const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const isLoginEnabled = username.trim() !== "" && password.trim() !== "";
 
 const HandleLogin = () => {
+  if (!isLoginEnabled) return;
   if (username === "admin" && password === "0000") {
     navigate("/main");
   } else {
@@ -149,7 +155,7 @@ const HandleLogin = () => {
           </div>
 
           {/* 로그인 버튼 */}
-          <div className={loginButton} onClick={HandleLogin}>로그인</div>
+          <div className={loginButton(isLoginEnabled)} onClick={HandleLogin}>로그인</div>
 
           {/* 하단 링크 */}
           <div

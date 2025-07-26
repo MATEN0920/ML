@@ -111,7 +111,10 @@ const inputBoxStyle = css`
   align-items: center;
   padding: 15px 16px;
   font-size: 16px;
-  color: #bdc5d0;
+    &::placeholder {
+    color: #bdc5d0;
+    text-transform: capitalize;
+  }
 `;
 
 
@@ -122,7 +125,7 @@ const placeholderStyle = css`
   text-transform: capitalize;
 `;
 
-const dropdownBoxStyle = css`
+const dropdownBoxStyle = (isSelected) => css`
   border-radius: 6px;
   background-color: #f6f7f9;
   border: 1px solid #eaecf0;
@@ -131,9 +134,10 @@ const dropdownBoxStyle = css`
   justify-content: space-between;
   padding: 15px 16px;
   font-size: 16px;
-  color: #bdc5d0;
+  color: ${isSelected ? "#232323" : "#bdc5d0"};
   height: 51px;
 `;
+
 
 const bottomNavStyle = css`
   align-self: stretch;
@@ -146,14 +150,16 @@ const bottomNavStyle = css`
   color: #fefefe;
 `;
 
-const navBtnStyle = css`
+const navBtnStyle = (isActive) => css`
   border-radius: 6px;
-  background-color: #d6dbe2;
+  background-color: ${isActive ? "#FF643E" : "#d6dbe2"};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 14px 20px;
+  cursor: ${isActive ? "pointer" : "default"};
+  transition: background-color 0.2s ease;
 `;
 
 const navBtnWithTextStyle = css`
@@ -172,6 +178,17 @@ const navBtnTextStyle = css`
   line-height: 140%;
   text-transform: capitalize;
   font-weight: 500;
+  color: #fff;
+`;
+const navBtnGrayStyle = css`
+  border-radius: 6px;
+  background-color: #d6dbe2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  cursor: pointer;
 `;
 
 const Step02Default = () => {
@@ -181,6 +198,13 @@ const Step02Default = () => {
       const [childFeatures, setChildFeatures] = useState('');
       const [guardianName, setGuardianName] = useState('');
       const [relationship, setRelationship] = useState('');
+
+      const isNextEnabled =
+        childName.trim() !== "" &&
+        childAge.trim() !== "" &&
+        childFeatures.trim() !== "" &&
+        guardianName.trim() !== "" &&
+        relationship !== "";
   
     const LoginStep1 = () => {
       navigate("/loginstep1");
@@ -250,7 +274,7 @@ const Step02Default = () => {
               <div className={inputGroupStyle}>
                 <b className={inputLabelStyle}>어린이와의 관계</b>
                 <select
-                  className={dropdownBoxStyle}
+                  className={dropdownBoxStyle(relationship !== "")}
                   value={relationship}
                   onChange={(e) => setRelationship(e.target.value)}
                 >
@@ -266,10 +290,13 @@ const Step02Default = () => {
         </div>
 
         <div className={bottomNavStyle}>
-          <div className={navBtnStyle} onClick={LoginStep1}>
+          <div className={navBtnGrayStyle} onClick={LoginStep1}>
             <div className={navBtnTextStyle}>←</div>
           </div>
-          <div className={navBtnStyle} onClick={Loading1}>
+          <div
+            className={navBtnStyle(isNextEnabled)}
+            onClick={isNextEnabled ? Loading1 : undefined}
+          >
             <div className={navBtnTextStyle}>다음 →</div>
           </div>
         </div>

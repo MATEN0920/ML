@@ -322,7 +322,7 @@ const Component1 = () => {
           </div>
         </div>
         <div className={styles.actionCard}>
-          <img className={styles.actionImageGray} src="/images/시나리오/선택문/불이야외치기.png" alt="" />
+          <img className={styles.actionImageGray} src="/images/시나리오/선택문/불이야크게외치기.png" alt="" />
           <div className={styles.actionButton}>
             <div className={styles.actionButtonText}>불이야!하고 외치기</div>
           </div>

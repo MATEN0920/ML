@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const styles = {
@@ -188,6 +188,10 @@ const Component1 = () => {
   const handleNotSureClick = () => {
     setShowRetryMessage(true);
   };
+
+  useEffect(() => {
+    localStorage.setItem("scenarioStartTime", new Date().toISOString());
+  }, []);
   
   return (
     <div className={styles.container}>

@@ -1,14 +1,28 @@
 import { css } from "@emotion/css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LivingRoom from "../module/LivingRoom";
+import LivingRoom1 from '../module/LivingRoom1';
+import MainRoom from '../module/MainRoom';
+import Kitchen from '../module/Kitchen';
+import FirePage from '../module/FirePage';
+import HamzzyRoom from '../module/HamzzyRoom';
+import Entrance from '../module/Entrance';
+import Entrance1 from '../module/Entrance1';
+import Out from '../module/Out';
+
 
 const styles = {
   container: css`
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    min-height: 834px;
     position: relative;
-    background-color: #fefefe;
-    height: 834px;
-    overflow: hidden;
+    background-color: #363d47;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: left;
     font-size: 24px;
     color: #363d47;
@@ -71,6 +85,7 @@ const styles = {
     width: 404px;
     height: 404px;
     object-fit: cover;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   headerTextBox: css`
     position: absolute;
@@ -128,7 +143,6 @@ const styles = {
     gap: 6px;
     padding: 14px 20px;
     box-sizing: border-box;
-    cursor: pointer;
   `,
   speechBubbleBox: css`
     position: absolute;
@@ -136,6 +150,7 @@ const styles = {
     left: 40px;
     display: flex;
     flex-direction: column;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechBubble: css`
     box-shadow: 0px 5px 8.2px rgba(0, 0, 0, 0.2);
@@ -144,96 +159,17 @@ const styles = {
     display: flex;
     justify-content: center;
     padding: 20px 30px;
-    z-index: 999;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechText: css`
     letter-spacing: -0.01em;
     line-height: 135%;
-    z-index: 999;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   triangleImage: css`
     width: 55.9px;
     height: 28px;
     margin-top: -8px;
-  `,
-  actionCardWrapper: css`
-    position: absolute;
-    top: 309px;
-    left: 347px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-  `,
-  actionCard: css`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 13px;
-  `,
-  actionImage: css`
-    width: 100%;
-    height: 221px;
-    border-radius: 10px;
-    object-fit: cover;
-    background-color: white;
-  `,
-  actionButton: css`
-    border-radius: 4.36px;
-    background-color: white;
-    border: 1.5px solid #8d94a0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 14px 20px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s, color 0.2s;
-    width: 210px;
-  `,
-  actionButtonText: css`
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 500;
-    font-size: 18px;
-  `,
-  actionButtonOrange: css`
-    border-radius: 4.36px;
-    background-color: #ff643e;
-    border: 1.5px solid #ff643e;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 14px 20px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    transition: background-color 0.2s, color 0.2s;
-    width: 210px;
-  `,
-  actionButtonTextOrange: css`
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 500;
-    font-size: 18px;
-    color: #fefefe;
-  `,
-  actionPromptText: css`
-    position: absolute;
-    top: 215px;
-    left: calc(50% + 6px);
-    font-size: 16px;
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 600;
-    color: #d6dbe2;
-    text-align: left;
   `,
   alertOverlay: css`
     position: fixed;
@@ -260,28 +196,23 @@ const styles = {
 };
 
 const Component1 = () => {
-  const [selectedAction, setSelectedAction] = useState(null);
+
   const [showRetryMessage, setShowRetryMessage] = useState(false);
   const navigate = useNavigate();
 
-  const handleClick = (index) => {
-    setSelectedAction(index);
+  const handleReadyClick = () => {
+    navigate("/scenario03");
   };
 
   const handleNotSureClick = () => {
     setShowRetryMessage(true);
   };
 
-  const handleNextClick = () => {
-    if (selectedAction === 0) navigate("/scenario24");
-    else if (selectedAction === 1) navigate("/scenario27");
-    else if (selectedAction === 2) navigate("/scenario30");
-  };
-
   return (
     <div className={styles.container}>
-      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
-
+      <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
+        <Entrance1 />
+      </div>
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
         <div className={styles.profileTextBox}>
@@ -290,22 +221,22 @@ const Component1 = () => {
         </div>
       </div>
 
-      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404엄지척소방곰.png" alt="" />
+      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404돋보기소방곰.png" alt="" />
 
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
         <div className={styles.headerDescription}>
-          <div className={styles.stepText}>4단계</div>
-          <div className={styles.stepText}>대피 후엔 어떻게 해야할까?</div>
+          <div className={styles.stepText}>1단계</div>
+          <div className={styles.stepText}>어디서 불이 났는지 알아볼까?</div>
         </div>
       </div>
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>잘 모르겠어</div>
+          <div className={styles.stepText}>닫혀있어</div>
         </div>
-        <div className={styles.buttonOrange} onClick={handleNextClick}>
-          <div className={styles.stepText}>다음 →</div>
+        <div className={styles.buttonOrange} onClick={handleReadyClick}>
+          <div className={styles.stepText}>난 여기야! →</div>
         </div>
       </div>
 
@@ -313,42 +244,19 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              계단을 이용해서<br />건물 밖으로 대피 후엔<br />어떻게 해야할까?
+              화면을 클릭해서<br />
+              햄찌가 있는 곳을 찾아보자!
             </p>
           </b>
-          {showRetryMessage && (
-            <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
-              <div className={styles.alertBox}>행동상자를 클릭해보자!</div>
-            </div>
-          )}
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
-      </div>
-
-      <div className={styles.actionPromptText}>세 가지 중에 햄찌가 해야할 행동을 골라볼까?</div>
-
-      <div className={styles.actionCardWrapper}>
-        {["119신고하기", "불이야 크게 외치기", "도움 요청하기"].map((text, idx) => (
-          <div className={styles.actionCard} key={idx}>
-            <img
-              className={styles.actionImage}
-              src={`/images/시나리오/선택문/${text.replace(/!| /g, "")}.png`}
-              alt=""
-            />
-            <div
-              className={selectedAction === idx ? styles.actionButtonOrange : styles.actionButton}
-              onClick={() => handleClick(idx)}
-            >
-              <div
-                className={
-                  selectedAction === idx ? styles.actionButtonTextOrange : styles.actionButtonText
-                }
-              >
-                {text}
-              </div>
+        {showRetryMessage && (
+          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
+            <div className={styles.alertBox}>
+              다시 한 번 시도해볼까?
             </div>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

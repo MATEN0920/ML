@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const styles = {
   container: css`
@@ -233,6 +234,28 @@ const Component1 = () => {
     navigate("/main");
    };
 
+  const [formattedDate, setFormattedDate] = useState("");
+  const [elapsedTime, setElapsedTime] = useState("");
+
+  // ✅ 날짜 및 경과 시간 계산
+  useEffect(() => {
+    // 날짜
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, "0")}.${String(today.getDate()).padStart(2, "0")}`;
+    setFormattedDate(dateStr);
+
+    // 시작 시각 가져오기
+    const startTimeStr = localStorage.getItem("scenarioStartTime");
+    if (startTimeStr) {
+      const startTime = new Date(startTimeStr);
+      const endTime = new Date();
+      const diffMs = endTime - startTime;
+      const minutes = Math.floor(diffMs / 60000);
+      const seconds = Math.floor((diffMs % 60000) / 1000);
+      setElapsedTime(`${minutes}분 ${seconds}초`);
+    }
+  }, []);
+
   return (
 	<div className={styles.container}>
 	  <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
@@ -277,16 +300,16 @@ const Component1 = () => {
   <div className={styles.badgeImageWrapper}>
     <img
       className={styles.badgeImage}
-      src="/images/배지/콘센트배지획득.png"
+      src="/images/뱃지/콘센트뱃지획득.png"
       alt="뱃지 이미지"
     />
   </div>
   <div className={styles.badgeTextBlock}>
     <b className={styles.badgeTitle}>명예 소방관 뱃지 획득!</b>
-    <div className={styles.badgeDate}>00.00.00 완료</div>
+    <div className={styles.badgeDate}>{formattedDate} 완료</div>
     <div className={styles.badgeDesc}>
       <p style={{ margin: 0 }}>시나리오: 거실 콘센트에서 불이 났어요!</p>
-      <p style={{ margin: 0 }}>난이도 중 / 완료 시간 00분 00초</p>
+      <p style={{ margin: 0 }}>난이도 중 / 완료 시간 {elapsedTime}</p>
     </div>
   </div>
 </div>

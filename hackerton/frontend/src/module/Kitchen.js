@@ -39,9 +39,11 @@ const Kitchen = () => {
       minHfov: 60,
       maxHfov: 180,
       pitch: 0,
-      yaw: 180,
+      yaw: 0,
       compass: true,
       autoRotate: 0,
+      minPitch: -50, // 아래로 최대 각도 (기본값: -90)
+      maxPitch: 50,  // 위로 최대 각도 (기본값: 90)
     });
 
     let downCoords = null;
@@ -59,9 +61,9 @@ const Kitchen = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('/living');
+            navigate('../Scenario02');
           } else if (box.cls === 2) {
-            navigate('/entrance');
+            navigate('../Scenario02_3');
           }
           break;
         }
@@ -77,16 +79,11 @@ const Kitchen = () => {
 
   return (
     <div>
-      <h2>주방 360도 뷰</h2>
       <div
         id="kitchen-pan"
         ref={pannellumRef}
         style={{ width: '100%', height: '500px', border: '2px solid #aaa' }}
       />
-      <p>
-        kitchen.jpg VR 화면입니다.<br />
-        화살표를 클릭하면 현재 위치가 이동합니다.
-      </p>
     </div>
   );
 };

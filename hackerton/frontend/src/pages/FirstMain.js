@@ -65,7 +65,7 @@ const loginSection = css`
 const loginButton = css`
   width: 312px;
   border-radius: 6px;
-  background-color: #ff977e;
+  background-color: #FF643E;
   display: flex;
   align-items: center;
   justify-content: center;

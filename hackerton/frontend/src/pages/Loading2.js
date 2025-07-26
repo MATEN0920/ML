@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const wrapperStyle = css`
   width: 100vw;
@@ -19,19 +20,16 @@ const whiteBoxStyle = css`
   position: absolute;
   border-radius: 12px;
   background-color: #f6f7f9;
-  position: relative;
   width: 1194px;
   height: 834px;
   display: flex;
   flex-direction: column;
   font-family: Pretendard;
   color: #232323;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 32px 180px;
-  box-sizing: border-box;
   align-items: center;
   justify-content: center;
+  padding: 32px 180px;
+  box-sizing: border-box;
 `;
 
 const titleStyle = css`
@@ -72,14 +70,16 @@ const navBtnStyle = css`
   padding: 14px 20px;
 `;
 
-const navBtnWithTextStyle = css`
+const navBtnWithTextStyle = (isActive) => css`
   border-radius: 6px;
-  background-color: #d6dbe2;
+  background-color: ${isActive ? "#FF643E" : "#d6dbe2"};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 14px 20px;
+  cursor: ${isActive ? "pointer" : "default"};
+  transition: background-color 0.3s ease;
 `;
 
 const navBtnTextStyle = css`
@@ -88,16 +88,28 @@ const navBtnTextStyle = css`
   line-height: 140%;
   text-transform: capitalize;
   font-weight: 500;
+  color: #fff;
 `;
 
 const Component1 = () => {
   const navigate = useNavigate();
+  const [isNextActive, setIsNextActive] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsNextActive(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const HouseStep1 = () => {
-      navigate("/housestep1");
-    };
-    const FirstMain = () => {
-      navigate("/");
-    };
+    navigate("/housestep1");
+  };
+
+  const FirstMain = () => {
+    if (isNextActive) navigate("/");
+  };
+
   return (
     <div className={wrapperStyle}>
       <div className={whiteBoxStyle}>
@@ -114,7 +126,7 @@ const Component1 = () => {
           <div className={navBtnStyle} onClick={HouseStep1}>
             <div className={navBtnTextStyle}>←</div>
           </div>
-          <div className={navBtnWithTextStyle} onClick={FirstMain}>
+          <div className={navBtnWithTextStyle(isNextActive)} onClick={FirstMain}>
             <div className={navBtnTextStyle}>다음 →</div>
           </div>
         </div>

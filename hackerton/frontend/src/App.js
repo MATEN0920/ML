@@ -14,6 +14,9 @@ import SecondMain from "./pages/SecondMain";
 import ThirdMain from "./pages/ThirdMain";
 import Scenario01 from "./pages/Scenario01";
 import Scenario02 from "./pages/Scenario02";
+import Scenario02_1 from "./pages/Scenario02_1";
+import Scenario02_2 from "./pages/Scenario02_2";
+import Scenario02_3 from "./pages/Scenario02_3";
 import Scenario03 from "./pages/Scenario03";
 import Scenario0401 from "./pages/Scenario04-1";
 import Scenario0402 from "./pages/Scenario04-2";
@@ -33,6 +36,10 @@ import Scenario15 from "./pages/Scenario15";
 import Scenario16 from "./pages/Scenario16";
 import Scenario17 from "./pages/Scenario17";
 import Scenario18 from "./pages/Scenario18";
+import Scenario18_1 from "./pages/Scenario18_1";
+import Scenario18_2 from "./pages/Scenario18_2";
+import Scenario18_3 from "./pages/Scenario18_3";
+import Scenario18_4 from "./pages/Scenario18_4";
 import Scenario19 from "./pages/Scenario19";
 import Scenario20 from "./pages/Scenario20";
 import Scenario21 from "./pages/Scenario21";
@@ -61,6 +68,9 @@ function App() {
         <Route path="/loading2" element={<Loading2 />} />
         <Route path="/housestep1" element={<HouseStep1 />} />
         <Route path="/housestep2" element={<HouseStep2 />} />
+        <Route path="/scenario02_1" element={<Scenario02_1 />} />
+        <Route path="/scenario02_2" element={<Scenario02_2 />} />
+        <Route path="/scenario02_3" element={<Scenario02_3 />} />
         <Route path="/housestep3" element={<HouseStep3 />} />
         <Route path="/housestep4" element={<HouseStep4 />} />
         <Route path="/housestep5" element={<HouseStep5 />} />
@@ -87,6 +97,10 @@ function App() {
         <Route path="/scenario16" element={<Scenario16 />} />
         <Route path="/scenario17" element={<Scenario17 />} />
         <Route path="/scenario18" element={<Scenario18 />} />
+        <Route path="/scenario18_1" element={<Scenario18_1 />} />
+        <Route path="/scenario18_2" element={<Scenario18_2 />} />
+        <Route path="/scenario18_3" element={<Scenario18_3 />} />
+        <Route path="/scenario18_4" element={<Scenario18_4 />} />
         <Route path="/scenario19" element={<Scenario19 />} />
         <Route path="/scenario20" element={<Scenario20 />} />
         <Route path="/scenario21" element={<Scenario21 />} />
