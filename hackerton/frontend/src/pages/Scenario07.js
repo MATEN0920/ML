@@ -143,31 +143,35 @@ const styles = {
     display: flex;
     justify-content: center;
     padding: 20px 30px;
+	z-index: 999
   `,
   speechText: css`
     letter-spacing: -0.01em;
     line-height: 135%;
+	z-index: 999
   `,
   triangleImage: css`
     width: 55.9px;
     height: 28px;
     margin-top: -8px;
   `,
-  overlayVector: css`
+  tiltedWhiteBox: css`
     position: absolute;
-    top: 326px;
-    left: 467px;
-    border-radius: 20px;
-    width: 686.5px;
-    height: 342.5px;
-    opacity: 0.29;
+    top: 228.61px;
+    left: 265px;
+    background-color: #fefefe;
+    width: 752px;
+    height: 484px;
+    transform: rotate(-6deg);
+    transform-origin: 0 0;
   `,
-  inspectionImage: css`
+  maskImage: css`
     position: absolute;
-    top: 326px;
-    left: 467px;
-    border-radius: 20px;
-    object-fit: cover;
+    top: 174.3px;
+    left: 288.36px;
+    width: 748px;
+    height: 510.4px;
+    object-fit: contain;
   `,
       alertOverlay: css`
     position: fixed;
@@ -194,6 +198,7 @@ const styles = {
 };
 
 const Component1 = () => {
+    const [showRetryMessage, setShowRetryMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
@@ -201,12 +206,11 @@ const Component1 = () => {
   };
 
   const handleNotSureClick = () => {
-    navigate("/scenario02");
+    setShowRetryMessage(true);
   };
   return (
     <div className={styles.container}>
-      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오pg5배경.png" alt="" />
-
+      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
         <div className={styles.profileTextBox}>
@@ -220,17 +224,17 @@ const Component1 = () => {
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
         <div className={styles.headerDescription}>
-          <div className={styles.stepText}>1단계</div>
-          <div className={styles.stepText}>어디서 불이 났는지 알아볼까?</div>
+          <div className={styles.stepText}>2단계</div>
+          <div className={styles.stepText}>불이 나면 어떻게 해야할까?</div>
         </div>
       </div>
 
       <div className={styles.buttonWrapper}>
-        <div className={styles.buttonGray}>
-          <div className={styles.stepText} onClick={handleReadyClick}>손잡이 차가워</div>
+        <div className={styles.buttonGray} onClick={handleNotSureClick}>
+          <div className={styles.stepText}>잘 모르겠어</div>
         </div>
-        <div className={styles.buttonOrange}>
-          <div className={styles.stepText} onClick={handleNotSureClick}>손잡이 뜨거워</div>
+        <div className={styles.buttonOrange} onClick={handleReadyClick}>
+          <div className={styles.stepText}>다음 →</div>
         </div>
       </div>
 
@@ -238,15 +242,22 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              방문이 닫혀있구나!<br />
-              닫혀있을 땐 바로 열면 안돼.<br />
-			  먼저, 문 손잡이가 뜨거운지 확인해볼까?
+              정말 잘 찾았는걸~! 역시 햄찌야!!<br />
+              불이 얼마나 크게 났는지 확인해볼까?
             </p>
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
       </div>
-      <img className={styles.inspectionImage} src="/images/시나리오/객체/손잡이.png" alt="" />
+
+      <img className={styles.maskImage} src="/images/시나리오/객체/화재포착.png" alt="" />
+      {showRetryMessage && (
+          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
+            <div className={styles.alertBox}>
+              다음 버튼을 눌러줘.
+            </div>
+          </div>
+        )}
     </div>
   );
 };

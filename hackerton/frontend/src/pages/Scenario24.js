@@ -142,130 +142,111 @@ const styles = {
 	display: flex;
 	justify-content: center;
 	padding: 20px 30px;
-	z-index: 999
   `,
   speechText: css`
 	letter-spacing: -0.01em;
 	line-height: 135%;
-	z-index: 999
   `,
   triangleImage: css`
 	width: 55.9px;
 	height: 28px;
 	margin-top: -8px;
   `,
-  tiltedWhiteBox: css`
-	position: absolute;
-	top: 228.61px;
-	left: 265px;
-	background-color: #fefefe;
-	width: 752px;
-	height: 484px;
-	transform: rotate(-6deg);
-	transform-origin: 0 0;
+    speechCard: css`
+    position: absolute;
+    border-radius: 10px;
+    background-color: #fefefe;
   `,
-	actionCardWrapper: css`
-	position: absolute;
-	top: 309px;
-	left: 347px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-	gap: 20px;
+  speechCard1: css`
+    top: 310px;
+    left: 517px;
+    width: 592px;
+    height: 112px;
   `,
-  actionCard: css`
-	width: 250px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
-	gap: 13px;
+  speechCardText1: css`
+    position: absolute;
+    top: 355px;
+    left: 686px;
+    letter-spacing: -0.01em;
+    line-height: 135%;
+    font-weight: bold;
   `,
-  actionImage: css`
-	align-self: stretch;
-	position: relative;
-	border-radius: 10px;
-	max-width: 100%;
-	overflow: hidden;
-	height: 221px;
-	flex-shrink: 0;
-	object-fit: cover;
-	background-color: white;
+  speechCardLabel1: css`
+    position: absolute;
+    top: 326px;
+    left: calc(50% + 180px);
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    line-height: 140%;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #ff643e;
+    text-align: left;
   `,
-  actionImageGray: css`
-	align-self: stretch;
-	position: relative;
-	border-radius: 10px;
-	max-width: 100%;
-	overflow: hidden;
-	height: 221px;
-	flex-shrink: 0;
-	object-fit: cover;
-	background-color: #808080ff;
+  speechCard2: css`
+    top: 453px;
+    left: 517px;
+    width: 592px;
+    height: 151px;
   `,
-  actionButton: css`
-	align-self: stretch;
-	border-radius: 4.36px;
-	background-color: rgba(254, 254, 254, 0.5);
-	border: 0.8px solid #808080ff;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	padding: 10px 50px;
+  speechCardText2: css`
+    position: absolute;
+    top: 498px;
+    left: 648px;
+    letter-spacing: -0.01em;
+    line-height: 135%;
+    display: inline-block;
+    width: 411px;
+    font-weight: bold;
   `,
-  actionButtonText: css`
-	position: relative;
-	letter-spacing: -0.01em;
-	line-height: 140%;
-	text-transform: capitalize;
-	font-weight: 500;
-	font-size: 18px;
+  speechCardLabel2: css`
+    position: absolute;
+    top: 469px;
+    left: calc(50% + 180px);
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    line-height: 140%;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #ff643e;
+    text-align: left;
   `,
-	actionButtonOrange: css`
-	align-self: stretch;
-	border-radius: 4.36px;
-	background-color: #FF643E;
-	border: 0.8px solid #8d94a0;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	padding: 10px 50px;
+  fireInfoWrapper: css`
+    position: absolute;
+    top: 189px;
+    left: 644px;
+    width: 339px;
+    height: 70px;
+    color: #fefefe;
   `,
-  actionButtonTextOrange: css`
-	position: relative;
-	letter-spacing: -0.01em;
-	line-height: 140%;
-	text-transform: capitalize;
-	font-weight: 500;
-	font-size: 18px;
-	color: #FEFEFE;
+  fireInfoLabel: css`
+    position: absolute;
+    top: 0px;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    line-height: 140%;
+    text-transform: capitalize;
+    font-weight: 500;
+    color: #ff977e;
   `,
-  actionPromptText: css`
-	position: absolute;
-	top: 215px;
-	left: calc(50% + 6px);
-	font-size: 16px;
-	letter-spacing: -0.01em;
-	line-height: 140%;
-	text-transform: capitalize;
-	font-weight: 600;
-	color: #d6dbe2;
-	text-align: left;
+  fireInfoTitle: css`
+    position: absolute;
+    top: 32px;
+    letter-spacing: -0.01em;
+    line-height: 135%;
+    font-weight: bold;
   `,
 };
 
 const Component1 = () => {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario31");
+    navigate("/completescenario");
   };
 
   const handleNotSureClick = () => {
-    navigate("/scenario22");
+    navigate("/scenario32");
   };
   return (
 	<div className={styles.container}>
@@ -284,14 +265,14 @@ const Component1 = () => {
 	  <div className={styles.headerTextBox}>
 		<b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
 		<div className={styles.headerDescription}>
-		  <div className={styles.stepText}>4단계</div>
-		  <div className={styles.stepText}>대피 후엔 어떻게 해야할까?</div>
+		  <div className={styles.stepText}>5단계</div>
+		  <div className={styles.stepText}>화재 신고는 어떻게 해야할까?</div>
 		</div>
 	  </div>
 
 	  <div className={styles.buttonWrapper}>
 		<div className={styles.buttonGray} onClick={handleNotSureClick}>
-		  <div className={styles.stepText}>다시선택하기</div>
+		  <div className={styles.stepText}>이전</div>
 		</div>
 		<div className={styles.buttonOrange} onClick={handleReadyClick}>
 		  <div className={styles.stepText}>다음 →</div>
@@ -302,36 +283,35 @@ const Component1 = () => {
 		<div className={styles.speechBubble}>
 		  <b className={styles.speechText}>
 			<p style={{ margin: 0 }}>
-			  맞아! 대피 후에<br />
-			  휴대폰이 있다면 <br />
-			  119에 신고하면 돼!
+			  잘했어! 소방관들이<br />
+			  도와주려면 우리집의<br />
+			  주소를 알려줘야해. 같이 외워볼까?
 			</p>
 		  </b>
 		</div>
 		<img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
+		
 	  </div>
+	  {/* 🔥 화재 위치 정보 */}
+	<div className={styles.fireInfoWrapper}>
+	<div className={styles.fireInfoLabel} style={{ left: 0 }}>화재 위치</div>
+	<div className={styles.fireInfoLabel} style={{ left: 270 }}>화재 종류</div>
+	<b className={styles.fireInfoTitle} style={{ left: 8 }}>거실</b>
+	<b className={styles.fireInfoTitle} style={{ left: 274 }}>콘센트</b>
+	</div>
 
-	  {/* 액션 카드 3개 */}
-	  <div className={styles.actionCardWrapper}>
-		<div className={styles.actionCard}>
-		  <img className={styles.actionImage} src="/images/시나리오/선택문/119신고하기.png" alt="" />
-		  <div className={styles.actionButtonOrange}>
-			<div className={styles.actionButtonTextOrange}>119 신고하기</div>
-		  </div>
-		</div>
-		<div className={styles.actionCard}>
-		  <img className={styles.actionImageGray} src="/images/시나리오/선택문/불이야크게외치기.png" alt="" />
-		  <div className={styles.actionButton}>
-			<div className={styles.actionButtonText}>불이야!하고 외치기</div>
-		  </div>
-		</div>
-		<div className={styles.actionCard}>
-		  <img className={styles.actionImageGray} src="/images/시나리오/선택문/도움요청하기.png" alt="" />
-		  <div className={styles.actionButton}>
-			<div className={styles.actionButtonText}>도움 요청하기</div>
-		  </div>
-		</div>
-	  </div>  
+	{/* 🗣️ 첫 번째 따라읽기 카드 */}
+	<div className={`${styles.speechCard} ${styles.speechCard1}`} />
+	<b className={styles.speechCardText1}>거실 콘센트에서 불이 났어요!</b>
+	<div className={styles.speechCardLabel1}>따라읽어보세요</div>
+
+	{/* 🗣️ 두 번째 따라읽기 카드 */}
+	<div className={`${styles.speechCard} ${styles.speechCard2}`} />
+	<b className={styles.speechCardText2}>
+	우리집 주소는 경기도 시흥시 신천동<br />
+	신천고등학교 1동 202호이에요!
+	</b>
+	<div className={styles.speechCardLabel2}>따라읽어보세요</div>
 	</div>
   );
 };

@@ -17,29 +17,29 @@ function isInsideBox(yaw, pitch, box) {
   return Math.abs(yaw - byaw) < w / 2 && Math.abs(pitch - bpitch) < h / 2;
 }
 
-const MainRoom = () => {
+const Entrance = () => {
   const pannellumRef = useRef(null);
   const [boxes, setBoxes] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     // 라벨 파일 불러오기
-    fetch(process.env.PUBLIC_URL + '/result/main_room_360.txt')
+    fetch(process.env.PUBLIC_URL + '/result/entrance_360.txt')
       .then((res) => res.text())
       .then((text) => setBoxes(parseLabels(text)));
   }, []);
 
   useEffect(() => {
     if (!window.pannellum) return;
-    const viewer = window.pannellum.viewer('main-pan', {
+    const viewer = window.pannellum.viewer('entrance-pan', {
       type: "equirectangular",
-      panorama: process.env.PUBLIC_URL + "/result/main_room.jpg",
+      panorama: process.env.PUBLIC_URL + "/result/entrance2.jpg",
       autoLoad: true,
       hfov: 120,
       minHfov: 60,
-      maxHfov: 140,
+      maxHfov: 130,
       pitch: 0,
-      yaw: 0,
+      yaw: 250,
       compass: true,
       autoRotate: 0,
       minPitch: -50, // 아래로 최대 각도 (기본값: -90)
@@ -61,7 +61,7 @@ const MainRoom = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('../Scenario02');
+            navigate('../Scenario15');
           }
           break;
         }
@@ -70,7 +70,7 @@ const MainRoom = () => {
 
     // cleanup
     return () => {
-      const panDiv = document.getElementById('main-pan');
+      const panDiv = document.getElementById('entrance-pan');
       if (panDiv) panDiv.innerHTML = '';
     };
   }, [boxes, navigate]);
@@ -78,12 +78,12 @@ const MainRoom = () => {
   return (
     <div>
       <div
-        id="main-pan"
+        id="entrance-pan"
         ref={pannellumRef}
-        style={{ width: '100%', height: '500px', border: '2px solid #aaa' }}
+        style={{ width: '100%', height: '500px', border: "none", boxShadow: "none" }} // 테두리 제거
       />
     </div>
   );
 };
 
-export default MainRoom;
+export default Entrance;

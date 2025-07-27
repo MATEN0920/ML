@@ -165,13 +165,20 @@ const styles = {
     transform: rotate(-6deg);
     transform-origin: 0 0;
   `,
-  maskImage: css`
+  frameWrapper: css`
     position: absolute;
-    top: 174.3px;
-    left: 288.36px;
-    width: 748px;
-    height: 510.4px;
-    object-fit: contain;
+    top: 203px;
+    left: 474px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  `,
+  frameImage: css`
+    width: 463px;
+    height: 409.3px;
+    border-radius: 18.52px;
+    object-fit: cover;
   `,
       alertOverlay: css`
     position: fixed;
@@ -198,7 +205,6 @@ const styles = {
 };
 
 const Component1 = () => {
-    const [showRetryMessage, setShowRetryMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
@@ -206,11 +212,12 @@ const Component1 = () => {
   };
 
   const handleNotSureClick = () => {
-    setShowRetryMessage(true);
   };
+
   return (
     <div className={styles.container}>
       <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
+
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
         <div className={styles.profileTextBox}>
@@ -219,7 +226,7 @@ const Component1 = () => {
         </div>
       </div>
 
-      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404돋보기소방곰.png" alt="" />
+      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404엄지척소방곰.png" alt="" />
 
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
@@ -242,22 +249,16 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              정말 잘 찾았는걸~! 역시 햄찌야!!<br />
-              불이 얼마나 크게 났는지 확인해볼까?
+              너무 잘했어! 이렇게 불이<br />
+              번지고 있을 땐 당장 대피해야해.
             </p>
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
       </div>
-
-      <img className={styles.maskImage} src="/images/시나리오/객체/화재포착.png" alt="" />
-      {showRetryMessage && (
-          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
-            <div className={styles.alertBox}>
-              다음 버튼을 눌러줘.
-            </div>
-          </div>
-        )}
+	  <div className={styles.frameWrapper}>
+        <img className={styles.frameImage} src="/images/시나리오/선택소방곰/나가는소방곰.png" alt="" />
+      </div>
     </div>
   );
 };

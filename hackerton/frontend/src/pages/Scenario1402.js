@@ -1,14 +1,16 @@
 import { css } from "@emotion/css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LivingRoom from "../module/LivingRoom";
+import LivingRoom from "../module/LivingRoom2";
 import LivingRoom1 from '../module/LivingRoom1';
-import LivingRoom2 from '../module/LivingRoom2';
-import MainRoom from '../module/MainRoom';
-import Kitchen from '../module/Kitchen';
+import LivingRoom2 from '../module/LivingRoom3';
+import MainRoom from '../module/MainRoom1';
+import Kitchen1 from '../module/Kitchen1';
+import Kitchen2 from '../module/Kitchen2';
 import FirePage from '../module/FirePage';
-import HamzzyRoom from '../module/HamzzyRoom';
-import Entrance from '../module/Entrance';
+import HamzzyRoom from '../module/HamzzyRoom1';
+import HamzzyRoom2 from '../module/HamzzyRoom2';
+import Entrance from '../module/Entrance2';
 import Out from '../module/Out';
 
 const styles = {
@@ -176,16 +178,14 @@ const Component1 = () => {
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario19");
   };
 
   const handleNotSureClick = () => {
-    navigate("/scenario17");
   };
   return (
     <div className={styles.container}>
       <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
-        <Entrance />
+        <Kitchen2 />
       </div>
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />

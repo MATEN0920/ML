@@ -1,27 +1,14 @@
 import { css } from "@emotion/css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LivingRoom from "../module/LivingRoom";
-import  LivingRoom1 from '../module/LivingRoom1';
-import MainRoom from '../module/MainRoom';
-import Kitchen from '../module/Kitchen';
-import FirePage from '../module/FirePage';
-import HamzzyRoom from '../module/HamzzyRoom';
-import Entrance from '../module/Entrance';
-import Out from '../module/Out';
-
 
 const styles = {
   container: css`
-    width: 100vw;
-    height: 100vh;
-    min-height: 834px;
+    width: 100%;
     position: relative;
-    background-color: #363d47;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    background-color: #fefefe;
+    height: 834px;
+    overflow: hidden;
     text-align: left;
     font-size: 24px;
     color: #363d47;
@@ -84,7 +71,6 @@ const styles = {
     width: 404px;
     height: 404px;
     object-fit: cover;
-    z-index: 10; // 추가: VR 화면보다 높게
   `,
   headerTextBox: css`
     position: absolute;
@@ -149,7 +135,6 @@ const styles = {
     left: 40px;
     display: flex;
     flex-direction: column;
-    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechBubble: css`
     box-shadow: 0px 5px 8.2px rgba(0, 0, 0, 0.2);
@@ -158,19 +143,28 @@ const styles = {
     display: flex;
     justify-content: center;
     padding: 20px 30px;
-    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechText: css`
     letter-spacing: -0.01em;
     line-height: 135%;
-    z-index: 10; // 추가: VR 화면보다 높게
   `,
   triangleImage: css`
     width: 55.9px;
     height: 28px;
     margin-top: -8px;
   `,
-  alertOverlay: css`
+  houseroom: css`
+	left: 410px;
+	top: 238px;
+    width: 706px;
+	position: relative;
+	height: 376px;
+	text-align: center;
+	font-size: 20.36px;
+	color: #bdc5d0;
+	font-family: Pretendard;
+  `,
+      alertOverlay: css`
     position: fixed;
     top: 0;
     left: 0;
@@ -195,12 +189,12 @@ const styles = {
 };
 
 const Component1 = () => {
-
+  
   const [showRetryMessage, setShowRetryMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario03");
+    navigate("/scenario05");
   };
 
   const handleNotSureClick = () => {
@@ -209,9 +203,8 @@ const Component1 = () => {
 
   return (
     <div className={styles.container}>
-      <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
-        <MainRoom />
-      </div>
+      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
+
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
         <div className={styles.profileTextBox}>
@@ -220,7 +213,7 @@ const Component1 = () => {
         </div>
       </div>
 
-      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404돋보기소방곰.png" alt="" />
+      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404노트북소방곰.png" alt="" />
 
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
@@ -232,19 +225,21 @@ const Component1 = () => {
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>닫혀있어</div>
+          <div className={styles.stepText}>잘 모르겠어</div>
         </div>
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
-          <div className={styles.stepText}>난 여기야! →</div>
+          <div className={styles.stepText}>다음 →</div>
         </div>
       </div>
+
 
       <div className={styles.speechBubbleBox}>
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              화면을 클릭해서<br />
-              햄찌가 있는 곳을 찾아보자!
+              햄찌는 햄찌방에 있구나!<br />
+              알려줘서 고마워. 지금 집에서 나는<br />
+              연기가 어디서 나는 건지 함께 찾아볼까?
             </p>
           </b>
         </div>
@@ -252,7 +247,7 @@ const Component1 = () => {
         {showRetryMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
             <div className={styles.alertBox}>
-              다시 한 번 시도해볼까?
+              다시 한 번 확인해볼까?
             </div>
           </div>
         )}

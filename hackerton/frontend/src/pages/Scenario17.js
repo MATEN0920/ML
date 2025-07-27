@@ -142,106 +142,15 @@ const styles = {
 	display: flex;
 	justify-content: center;
 	padding: 20px 30px;
-	z-index: 999
   `,
   speechText: css`
 	letter-spacing: -0.01em;
 	line-height: 135%;
-	z-index: 999
   `,
   triangleImage: css`
 	width: 55.9px;
 	height: 28px;
 	margin-top: -8px;
-  `,
-  tiltedWhiteBox: css`
-	position: absolute;
-	top: 228.61px;
-	left: 265px;
-	background-color: #fefefe;
-	width: 752px;
-	height: 484px;
-	transform: rotate(-6deg);
-	transform-origin: 0 0;
-  `,
-	actionCardWrapper: css`
-	position: absolute;
-	top: 309px;
-	left: 347px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-	gap: 20px;
-  `,
-  actionCard: css`
-	width: 250px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
-	gap: 13px;
-  `,
-  actionImage: css`
-	align-self: stretch;
-	position: relative;
-	border-radius: 10px;
-	max-width: 100%;
-	overflow: hidden;
-	height: 221px;
-	flex-shrink: 0;
-	object-fit: cover;
-  `,
-  actionButton: css`
-	align-self: stretch;
-	border-radius: 4.36px;
-	background-color: rgba(254, 254, 254, 0.5);
-	border: 0.8px solid #8d94a0;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	padding: 10px 50px;
-  `,
-  actionButtonText: css`
-	position: relative;
-	letter-spacing: -0.01em;
-	line-height: 140%;
-	text-transform: capitalize;
-	font-weight: 500;
-	font-size: 18px;
-  `,
-    actionButtonOrange: css`
-	align-self: stretch;
-	border-radius: 4.36px;
-	background-color: #FF643E;
-	border: 0.8px solid #8d94a0;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	padding: 10px 50px;
-  `,
-  actionButtonTextOrange: css`
-	position: relative;
-	letter-spacing: -0.01em;
-	line-height: 140%;
-	text-transform: capitalize;
-	font-weight: 500;
-	font-size: 18px;
-	color: #FEFEFE;
-  `,
-  actionPromptText: css`
-	position: absolute;
-	top: 215px;
-	left: calc(50% + 6px);
-	font-size: 16px;
-	letter-spacing: -0.01em;
-	line-height: 140%;
-	text-transform: capitalize;
-	font-weight: 600;
-	color: #d6dbe2;
-	text-align: left;
   `,
 };
 
@@ -259,7 +168,7 @@ const Component1 = () => {
 
   return (
 	<div className={styles.container}>
-	  <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
+	  <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오pg21배경.png" alt="" />
 
 	  <div className={styles.profileBox}>
 		<img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
@@ -292,38 +201,13 @@ const Component1 = () => {
 		<div className={styles.speechBubble}>
 		  <b className={styles.speechText}>
 			<p style={{ margin: 0 }}>
-			  그럼 어디로<br />
-			  대피해야할까?
+			  천재 소방관 햄찌!<br />
+			  불이 나면 꼭 계단을 이용해야해.
 			</p>
 		  </b>
 		</div>
 		<img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
 	  </div>
-	<div className={styles.actionPromptText}>
-		세 가지 중에 햄찌가 대피할 곳을 골라볼까?
-	  </div>
-
-	  {/* 액션 카드 3개 */}
-	  <div className={styles.actionCardWrapper}>
-		<div className={styles.actionCard}>
-		  <img className={styles.actionImage} src="/images/시나리오/선택문/선택햄찌방.png" alt="" />
-		  <div className={styles.actionButton}>
-			<div className={styles.actionButtonText}>햄찌방</div>
-		  </div>
-		</div>
-		<div className={styles.actionCard}>
-		  <img className={styles.actionImage} src="/images/시나리오/선택문/선택화장실문.png" alt="" />
-		  <div className={styles.actionButton}>
-			<div className={styles.actionButtonText}>화장실</div>
-		  </div>
-		</div>
-		<div className={styles.actionCard}>
-		  <img className={styles.actionImage} src="/images/시나리오/선택문/선택현관문.png" alt="" />
-		  <div className={styles.actionButtonOrange}>
-			<div className={styles.actionButtonTextOrange}>현관문 밖</div>
-		  </div>
-		</div>
-	  </div>  
 	</div>
   );
 };

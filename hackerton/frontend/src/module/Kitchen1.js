@@ -37,7 +37,7 @@ const Kitchen = () => {
       autoLoad: true,
       hfov: 120,
       minHfov: 60,
-      maxHfov: 180,
+      maxHfov: 140,
       pitch: 0,
       yaw: 0,
       compass: true,
@@ -61,9 +61,9 @@ const Kitchen = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('../Scenario18');
+            navigate('../Scenario02');
           } else if (box.cls === 2) {
-            navigate('../Scenario18_4');
+            navigate('../Scenario0203');
           }
           break;
         }

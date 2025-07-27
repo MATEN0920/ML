@@ -61,7 +61,7 @@ const Entrance = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 2) {
-            navigate('../Scenario02_2');
+            navigate('../Scenario0202');
           }
           break;
         }

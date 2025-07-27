@@ -1,14 +1,27 @@
 import { css } from "@emotion/css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LivingRoom from "../module/LivingRoom2";
+import LivingRoom1 from '../module/LivingRoom1';
+import LivingRoom3 from '../module/LivingRoom3';
+import MainRoom from '../module/MainRoom1';
+import Kitchen2 from '../module/Kitchen2';
+import FirePage from '../module/FirePage';
+import HamzzyRoom from '../module/HamzzyRoom1';
+import Entrance from '../module/Entrance2';
+import Out from '../module/Out';
 
 const styles = {
   container: css`
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    min-height: 834px;
     position: relative;
-    background-color: #fefefe;
-    height: 834px;
-    overflow: hidden;
+    background-color: #363d47;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: left;
     font-size: 24px;
     color: #363d47;
@@ -71,6 +84,7 @@ const styles = {
     width: 404px;
     height: 404px;
     object-fit: cover;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   headerTextBox: css`
     position: absolute;
@@ -135,6 +149,7 @@ const styles = {
     left: 40px;
     display: flex;
     flex-direction: column;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechBubble: css`
     box-shadow: 0px 5px 8.2px rgba(0, 0, 0, 0.2);
@@ -143,106 +158,17 @@ const styles = {
     display: flex;
     justify-content: center;
     padding: 20px 30px;
-    z-index: 999
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechText: css`
     letter-spacing: -0.01em;
     line-height: 135%;
-    z-index: 999
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   triangleImage: css`
     width: 55.9px;
     height: 28px;
     margin-top: -8px;
-  `,
-  tiltedWhiteBox: css`
-    position: absolute;
-    top: 228.61px;
-    left: 265px;
-    background-color: #fefefe;
-    width: 752px;
-    height: 484px;
-    transform: rotate(-6deg);
-    transform-origin: 0 0;
-  `,
-    actionCardWrapper: css`
-    position: absolute;
-    top: 309px;
-    left: 347px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-  `,
-  actionCard: css`
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 13px;
-  `,
-  actionImage: css`
-    align-self: stretch;
-    position: relative;
-    border-radius: 10px;
-    max-width: 100%;
-    overflow: hidden;
-    height: 221px;
-    flex-shrink: 0;
-    object-fit: cover;
-  `,
-  actionButton: css`
-    align-self: stretch;
-    border-radius: 4.36px;
-    background-color: rgba(254, 254, 254, 0.5);
-    border: 0.8px solid #8d94a0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 50px;
-  `,
-  actionButtonOrange: css`
-    align-self: stretch;
-    border-radius: 4.36px;
-    background-color: #FF643E;
-    border: 0.8px solid #8d94a0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 50px;
-  `,
-  actionButtonText: css`
-    position: relative;
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 500;
-    font-size: 18px;
-  `,
-  actionButtonTextOrange: css`
-    position: relative;
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 500;
-    font-size: 18px;
-    color: #FEFEFE;
-  `,
-  actionPromptText: css`
-    position: absolute;
-    top: 215px;
-    left: calc(50% + 6px);
-    font-size: 16px;
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 600;
-    color: #d6dbe2;
-    text-align: left;
   `,
 };
 
@@ -250,16 +176,17 @@ const Component1 = () => {
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario15");
+    navigate("/scenario19");
   };
 
   const handleNotSureClick = () => {
-    navigate("/scenario13");
+    navigate("/scenario17");
   };
   return (
     <div className={styles.container}>
-      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
-
+      <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
+        <LivingRoom3 />
+      </div>
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
         <div className={styles.profileTextBox}>
@@ -268,22 +195,19 @@ const Component1 = () => {
         </div>
       </div>
 
-      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404돋보기소방곰.png" alt="" />
+      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404엄지척소방곰.png" alt="" />
 
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
         <div className={styles.headerDescription}>
-          <div className={styles.stepText}>2단계</div>
-          <div className={styles.stepText}>불이 나면 어떻게 해야할까?</div>
+          <div className={styles.stepText}>3단계</div>
+          <div className={styles.stepText}>어디로 대피해야할까?</div>
         </div>
       </div>
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>잘 모르겠어</div>
-        </div>
-        <div className={styles.buttonOrange} onClick={handleReadyClick}>
-          <div className={styles.stepText}>다음 →</div>
+          <div className={styles.stepText}>이전</div>
         </div>
       </div>
 
@@ -291,38 +215,13 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              이런 불이 번지고 있어.<br />
-              이럴 땐 어떻게 해야할까?
+              역시 햄찌야. 집에서 불이 나면<br />
+              현관문 밖으로 대피해야해.
             </p>
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
       </div>
-    <div className={styles.actionPromptText}>
-        세 가지 중에 햄찌가 해야할 행동을 골라볼까?
-      </div>
-
-      {/* 액션 카드 3개 */}
-      <div className={styles.actionCardWrapper}>
-        <div className={styles.actionCard}>
-          <img className={styles.actionImage} src="/images/시나리오/선택소방곰/나가는소방곰.png" alt="" />
-          <div className={styles.actionButtonOrange}>
-            <div className={styles.actionButtonTextOrange}>당장 대피하기</div>
-          </div>
-        </div>
-        <div className={styles.actionCard}>
-          <img className={styles.actionImage} src="/images/시나리오/선택소방곰/전화하는소방곰.png" alt="" />
-          <div className={styles.actionButton}>
-            <div className={styles.actionButtonText}>부모님께 전화하기</div>
-          </div>
-        </div>
-        <div className={styles.actionCard}>
-          <img className={styles.actionImage} src="/images/시나리오/선택소방곰/불끄는소방곰.png" alt="" />
-          <div className={styles.actionButton}>
-            <div className={styles.actionButtonText}>불 끄기</div>
-          </div>
-        </div>
-      </div>  
     </div>
   );
 };

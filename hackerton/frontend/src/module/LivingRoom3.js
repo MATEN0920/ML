@@ -33,9 +33,9 @@ export default function Room360() {
 
   useEffect(() => {
     if (!window.pannellum) return;
-    const viewer = window.pannellum.viewer('pan', {
+    const viewer = window.pannellum.viewer('pan1', {
       type: 'equirectangular',
-      panorama: process.env.PUBLIC_URL + '/result/living_room_final.jpg',
+      panorama: process.env.PUBLIC_URL + '/result/living_room_1.jpg',
       autoLoad: true,
       hfov: 120,
       minHfov: 60,
@@ -67,8 +67,12 @@ export default function Room360() {
         );
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
-          if (box.cls === 4) {
-            navigate('../Scenario11');
+          if (box.cls === 1) {
+            navigate('../Scenario1401');
+          } else if (box.cls === 2) {
+            navigate('../Scenario1402');
+          } else if (box.cls === 3) {
+            navigate('../Scenario1403');
           }
           break;
         }
@@ -77,7 +81,7 @@ export default function Room360() {
 
     // cleanup
     return () => {
-      const panDiv = document.getElementById('pan');
+      const panDiv = document.getElementById('pan1');
       if (panDiv) panDiv.innerHTML = '';
     };
   }, [boxes, navigate]);
@@ -85,7 +89,7 @@ export default function Room360() {
   return (
     <div>
       <div
-        id="pan"
+        id="pan1"
         ref={panRef}
         style={{ width: '100%', height: '500px', border: "none", boxShadow: "none" }} // 테두리 제거
       />

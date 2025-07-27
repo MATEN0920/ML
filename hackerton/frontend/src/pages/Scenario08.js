@@ -143,15 +143,35 @@ const styles = {
     display: flex;
     justify-content: center;
     padding: 20px 30px;
+	z-index: 999
   `,
   speechText: css`
     letter-spacing: -0.01em;
     line-height: 135%;
+	z-index: 999
   `,
   triangleImage: css`
     width: 55.9px;
     height: 28px;
     margin-top: -8px;
+  `,
+  tiltedWhiteBox: css`
+    position: absolute;
+    top: 228.61px;
+    left: 265px;
+    background-color: #fefefe;
+    width: 752px;
+    height: 484px;
+    transform: rotate(-6deg);
+    transform-origin: 0 0;
+  `,
+  maskImage: css`
+    position: absolute;
+    top: 174.3px;
+    left: 288.36px;
+    width: 748px;
+    height: 510.4px;
+    object-fit: contain;
   `,
       alertOverlay: css`
     position: fixed;
@@ -190,7 +210,7 @@ const Component1 = () => {
   };
   return (
     <div className={styles.container}>
-      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오pg5배경.png" alt="" />
+      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
 
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
@@ -205,14 +225,14 @@ const Component1 = () => {
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
         <div className={styles.headerDescription}>
-          <div className={styles.stepText}>1단계</div>
-          <div className={styles.stepText}>어디서 불이 났는지 알아볼까?</div>
+          <div className={styles.stepText}>2단계</div>
+          <div className={styles.stepText}>불이 나면 어떻게 해야할까?</div>
         </div>
       </div>
 
       <div className={styles.buttonWrapper}>
-        <div className={styles.buttonGray}>
-          <div className={styles.stepText} onClick={handleNotSureClick}>모르겠어</div>
+        <div className={styles.buttonGray} onClick={handleNotSureClick}>
+          <div className={styles.stepText}>잘 모르겠어</div>
         </div>
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>다음 →</div>
@@ -223,20 +243,22 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              손잡이가 뜨겁지 않구나~<br />
-              잘했어! 이제 문을 열고 나가볼까?
+              이런 불이 번지고 있어.<br />
+              이럴 땐 어떻게 해야할까?
             </p>
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
-        		{showRetryMessage && (
+      </div>
+
+      <img className={styles.maskImage} src="/images/시나리오/객체/화재포착.png" alt="" />
+      {showRetryMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
             <div className={styles.alertBox}>
-              다음버튼을 눌러줘!
+              다음 버튼을 눌러줘.
             </div>
           </div>
         )}
-      </div>
     </div>
   );
 };

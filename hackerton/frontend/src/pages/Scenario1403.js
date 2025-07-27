@@ -1,16 +1,17 @@
 import { css } from "@emotion/css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LivingRoom from "../module/LivingRoom";
+import LivingRoom from "../module/LivingRoom2";
 import LivingRoom1 from '../module/LivingRoom1';
-import MainRoom from '../module/MainRoom';
-import Kitchen from '../module/Kitchen';
+import LivingRoom2 from '../module/LivingRoom3';
+import MainRoom from '../module/MainRoom1';
+import Kitchen from '../module/Kitchen1';
 import FirePage from '../module/FirePage';
-import HamzzyRoom from '../module/HamzzyRoom';
-import Entrance from '../module/Entrance';
-import Entrance1 from '../module/Entrance1';
+import HamzzyRoom from '../module/HamzzyRoom1';
+import HamzzyRoom2 from '../module/HamzzyRoom2';
+import HamzzyRoom3 from '../module/HamzzyRoom3';
+import Entrance from '../module/Entrance2';
 import Out from '../module/Out';
-
 
 const styles = {
   container: css`
@@ -171,47 +172,22 @@ const styles = {
     height: 28px;
     margin-top: -8px;
   `,
-  alertOverlay: css`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  `,
-  alertBox: css`
-    background-color: #fefefe;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    font-size: 18px;
-    color: #363d47;
-    font-weight: 500;
-  `,
 };
 
 const Component1 = () => {
-
-  const [showRetryMessage, setShowRetryMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario03");
+    navigate("/scenario19");
   };
 
   const handleNotSureClick = () => {
-    setShowRetryMessage(true);
+    navigate("/scenario17");
   };
-
   return (
     <div className={styles.container}>
       <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
-        <Entrance1 />
+        <HamzzyRoom3 />
       </div>
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
@@ -221,22 +197,19 @@ const Component1 = () => {
         </div>
       </div>
 
-      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404돋보기소방곰.png" alt="" />
+      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404엄지척소방곰.png" alt="" />
 
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
         <div className={styles.headerDescription}>
-          <div className={styles.stepText}>1단계</div>
-          <div className={styles.stepText}>어디서 불이 났는지 알아볼까?</div>
+          <div className={styles.stepText}>3단계</div>
+          <div className={styles.stepText}>어디로 대피해야할까?</div>
         </div>
       </div>
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>닫혀있어</div>
-        </div>
-        <div className={styles.buttonOrange} onClick={handleReadyClick}>
-          <div className={styles.stepText}>난 여기야! →</div>
+          <div className={styles.stepText}>이전</div>
         </div>
       </div>
 
@@ -244,19 +217,12 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              화면을 클릭해서<br />
-              햄찌가 있는 곳을 찾아보자!
+              역시 햄찌야. 집에서 불이 나면<br />
+              현관문 밖으로 대피해야해.
             </p>
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
-        {showRetryMessage && (
-          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
-            <div className={styles.alertBox}>
-              다시 한 번 시도해볼까?
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

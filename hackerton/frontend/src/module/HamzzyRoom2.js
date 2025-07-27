@@ -63,7 +63,7 @@ const HamzzyRoom = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('../Scenario09');
+            navigate('../Scenario06');
           }
           break;
         }

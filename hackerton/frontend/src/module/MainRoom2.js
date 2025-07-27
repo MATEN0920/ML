@@ -17,27 +17,27 @@ function isInsideBox(yaw, pitch, box) {
   return Math.abs(yaw - byaw) < w / 2 && Math.abs(pitch - bpitch) < h / 2;
 }
 
-const Kitchen = () => {
+const MainRoom = () => {
   const pannellumRef = useRef(null);
   const [boxes, setBoxes] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     // 라벨 파일 불러오기
-    fetch(process.env.PUBLIC_URL + '/result/kitchen_360.txt')
+    fetch(process.env.PUBLIC_URL + '/result/main_room_360.txt')
       .then((res) => res.text())
       .then((text) => setBoxes(parseLabels(text)));
   }, []);
 
   useEffect(() => {
     if (!window.pannellum) return;
-    const viewer = window.pannellum.viewer('kitchen-pan', {
+    const viewer = window.pannellum.viewer('main-pan', {
       type: "equirectangular",
-      panorama: process.env.PUBLIC_URL + "/result/kitchen.jpg",
+      panorama: process.env.PUBLIC_URL + "/result/main_room.jpg",
       autoLoad: true,
       hfov: 120,
       minHfov: 60,
-      maxHfov: 180,
+      maxHfov: 140,
       pitch: 0,
       yaw: 0,
       compass: true,
@@ -61,9 +61,7 @@ const Kitchen = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('../Scenario02');
-          } else if (box.cls === 2) {
-            navigate('../Scenario02_3');
+            navigate('../Scenario14');
           }
           break;
         }
@@ -72,7 +70,7 @@ const Kitchen = () => {
 
     // cleanup
     return () => {
-      const panDiv = document.getElementById('kitchen-pan');
+      const panDiv = document.getElementById('main-pan');
       if (panDiv) panDiv.innerHTML = '';
     };
   }, [boxes, navigate]);
@@ -80,7 +78,7 @@ const Kitchen = () => {
   return (
     <div>
       <div
-        id="kitchen-pan"
+        id="main-pan"
         ref={pannellumRef}
         style={{ width: '100%', height: '500px', border: '2px solid #aaa' }}
       />
@@ -88,4 +86,4 @@ const Kitchen = () => {
   );
 };
 
-export default Kitchen;
+export default MainRoom;

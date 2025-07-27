@@ -1,5 +1,4 @@
 import { css } from "@emotion/css";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const styles = {
@@ -192,12 +191,24 @@ const styles = {
 	height: 221px;
 	flex-shrink: 0;
 	object-fit: cover;
+	background-color: white;
+  `,
+  actionImageGray: css`
+	align-self: stretch;
+	position: relative;
+	border-radius: 10px;
+	max-width: 100%;
+	overflow: hidden;
+	height: 221px;
+	flex-shrink: 0;
+	object-fit: cover;
+	background-color: #808080ff;
   `,
   actionButton: css`
 	align-self: stretch;
 	border-radius: 4.36px;
 	background-color: rgba(254, 254, 254, 0.5);
-	border: 0.8px solid #8d94a0;
+	border: 0.8px solid #808080ff;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -212,7 +223,7 @@ const styles = {
 	font-weight: 500;
 	font-size: 18px;
   `,
-    actionButtonOrange: css`
+	actionButtonOrange: css`
 	align-self: stretch;
 	border-radius: 4.36px;
 	background-color: #FF643E;
@@ -244,48 +255,17 @@ const styles = {
 	color: #d6dbe2;
 	text-align: left;
   `,
-    alertOverlay: css`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  `,
-  alertBox: css`
-    background-color: #fefefe;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    font-size: 18px;
-    color: #363d47;
-    font-weight: 500;
-  `,
 };
 
 const Component1 = () => {
-	
-  const [showRetryMessage, setShowRetryMessage] = useState(false);
-  const [showNextMessage, setShowNextMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario20");
+    navigate("/scenario22");
   };
 
   const handleNotSureClick = () => {
-    setShowRetryMessage(true);
   };
-
-  const handleSureClick = () => {
-    setShowNextMessage(true);
-  };
-
   return (
 	<div className={styles.container}>
 	  <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
@@ -303,16 +283,16 @@ const Component1 = () => {
 	  <div className={styles.headerTextBox}>
 		<b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
 		<div className={styles.headerDescription}>
-		  <div className={styles.stepText}>3단계</div>
-		  <div className={styles.stepText}>어디로 대피해야할까?</div>
+		  <div className={styles.stepText}>4단계</div>
+		  <div className={styles.stepText}>대피 후엔 어떻게 해야할까?</div>
 		</div>
 	  </div>
 
 	  <div className={styles.buttonWrapper}>
 		<div className={styles.buttonGray} onClick={handleNotSureClick}>
-		  <div className={styles.stepText}>잘 모르겠어</div>
+		  <div className={styles.stepText}>다시선택하기</div>
 		</div>
-		<div className={styles.buttonOrange} onClick={handleNotSureClick}>
+		<div className={styles.buttonOrange} onClick={handleReadyClick}>
 		  <div className={styles.stepText}>다음 →</div>
 		</div>
 	  </div>
@@ -321,48 +301,33 @@ const Component1 = () => {
 		<div className={styles.speechBubble}>
 		  <b className={styles.speechText}>
 			<p style={{ margin: 0 }}>
-			  1층으로 어떻게 대피해야할까?
+			  맞아! 대피 후에<br />
+			  휴대폰이 있다면 <br />
+			  119에 신고하면 돼!
 			</p>
 		  </b>
-		  {showRetryMessage && (
-          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
-            <div className={styles.alertBox}>
-				행동상자를 클릭해보자!
-            </div>
-          </div>
-          )}
-          {showNextMessage && (
-          <div className={styles.alertOverlay} onClick={() => setShowNextMessage(false)}>
-            <div className={styles.alertBox}>
-				다시생각해보자!
-            </div>
-          </div>
-          )}
 		</div>
 		<img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
-	  </div>
-	<div className={styles.actionPromptText}>
-		세 가지 중에 햄찌가 해야할 행동을 골라볼까?
 	  </div>
 
 	  {/* 액션 카드 3개 */}
 	  <div className={styles.actionCardWrapper}>
 		<div className={styles.actionCard}>
-		  <img className={styles.actionImage} src="/images/시나리오/선택문/엘리베이터.png" alt="" />
-		  <div className={styles.actionButton} onClick={handleSureClick}>
-			<div className={styles.actionButtonText}>엘리베이터</div>
+		  <img className={styles.actionImage} src="/images/시나리오/선택문/119신고하기.png" alt="" />
+		  <div className={styles.actionButtonOrange}>
+			<div className={styles.actionButtonTextOrange}>119 신고하기</div>
 		  </div>
 		</div>
 		<div className={styles.actionCard}>
-		  <img className={styles.actionImage} src="/images/시나리오/선택문/계단.png" alt="" />
-		  <div className={styles.actionButton} onClick={handleReadyClick}>
-			<div className={styles.actionButtonText}>계단</div>
+		  <img className={styles.actionImageGray} src="/images/시나리오/선택문/불이야크게외치기.png" alt="" />
+		  <div className={styles.actionButton}>
+			<div className={styles.actionButtonText}>불이야!하고 외치기</div>
 		  </div>
 		</div>
 		<div className={styles.actionCard}>
-		  <img className={styles.actionImage} src="/images/시나리오/선택문/창문.png" alt="" />
-		  <div className={styles.actionButton} onClick={handleSureClick}>
-			<div className={styles.actionButtonText}>창문</div>
+		  <img className={styles.actionImageGray} src="/images/시나리오/선택문/도움요청하기.png" alt="" />
+		  <div className={styles.actionButton}>
+			<div className={styles.actionButtonText}>도움 요청하기</div>
 		  </div>
 		</div>
 	  </div>  

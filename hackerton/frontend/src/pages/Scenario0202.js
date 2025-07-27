@@ -1,13 +1,27 @@
 import { css } from "@emotion/css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LivingRoom from "../module/LivingRoom2";
+import  LivingRoom1 from '../module/LivingRoom1';
+import MainRoom from '../module/MainRoom1';
+import Kitchen from '../module/Kitchen1';
+import FirePage from '../module/FirePage';
+import HamzzyRoom from '../module/HamzzyRoom1';
+import Entrance from '../module/Entrance2';
+import Out from '../module/Out';
+
 
 const styles = {
   container: css`
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    min-height: 834px;
     position: relative;
-    background-color: #fefefe;
-    height: 834px;
-    overflow: hidden;
+    background-color: #363d47;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: left;
     font-size: 24px;
     color: #363d47;
@@ -70,6 +84,7 @@ const styles = {
     width: 404px;
     height: 404px;
     object-fit: cover;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   headerTextBox: css`
     position: absolute;
@@ -134,6 +149,7 @@ const styles = {
     left: 40px;
     display: flex;
     flex-direction: column;
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechBubble: css`
     box-shadow: 0px 5px 8.2px rgba(0, 0, 0, 0.2);
@@ -142,124 +158,59 @@ const styles = {
     display: flex;
     justify-content: center;
     padding: 20px 30px;
-    z-index: 999
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   speechText: css`
     letter-spacing: -0.01em;
     line-height: 135%;
-    z-index: 999
+    z-index: 10; // 추가: VR 화면보다 높게
   `,
   triangleImage: css`
     width: 55.9px;
     height: 28px;
     margin-top: -8px;
   `,
-  tiltedWhiteBox: css`
-    position: absolute;
-    top: 228.61px;
-    left: 265px;
+  alertOverlay: css`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  `,
+  alertBox: css`
     background-color: #fefefe;
-    width: 752px;
-    height: 484px;
-    transform: rotate(-6deg);
-    transform-origin: 0 0;
-  `,
-    actionCardWrapper: css`
-    position: absolute;
-    top: 309px;
-    left: 347px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-  `,
-  actionCard: css`
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 13px;
-  `,
-  actionImage: css`
-    align-self: stretch;
-    position: relative;
-    border-radius: 10px;
-    max-width: 100%;
-    overflow: hidden;
-    height: 221px;
-    flex-shrink: 0;
-    object-fit: cover;
-    background-color: white;
-  `,
-  actionButton: css`
-    align-self: stretch;
-    border-radius: 4.36px;
-    background-color: rgba(254, 254, 254, 0.5);
-    border: 0.8px solid #8d94a0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 50px;
-  `,
-  actionButtonText: css`
-    position: relative;
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 500;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
     font-size: 18px;
-  `,
-    actionButtonOrange: css`
-    align-self: stretch;
-    border-radius: 4.36px;
-    background-color: #FF643E;
-    border: 0.8px solid #8d94a0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 50px;
-  `,
-  actionButtonTextOrange: css`
-    position: relative;
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
+    color: #363d47;
     font-weight: 500;
-    font-size: 18px;
-    color: #FEFEFE;
-  `,
-  actionPromptText: css`
-    position: absolute;
-    top: 215px;
-    left: calc(50% + 6px);
-    font-size: 16px;
-    letter-spacing: -0.01em;
-    line-height: 140%;
-    text-transform: capitalize;
-    font-weight: 600;
-    color: #d6dbe2;
-    text-align: left;
   `,
 };
 
 const Component1 = () => {
-  	const navigate = useNavigate();
+
+  const [showRetryMessage, setShowRetryMessage] = useState(false);
+  const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario27");
   };
 
   const handleNotSureClick = () => {
-    navigate("/scenario22");
+    setShowRetryMessage(true);
   };
+
   return (
     <div className={styles.container}>
-      <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
-
+      <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
+        <Kitchen />
+      </div>
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
         <div className={styles.profileTextBox}>
@@ -268,22 +219,22 @@ const Component1 = () => {
         </div>
       </div>
 
-      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404엄지척소방곰.png" alt="" />
+      <img className={styles.bottomImage} src="/images/시나리오/소방곰/404돋보기소방곰.png" alt="" />
 
       <div className={styles.headerTextBox}>
         <b className={styles.headerTitle}>거실 콘센트에서 불이 났어요!</b>
         <div className={styles.headerDescription}>
-          <div className={styles.stepText}>4단계</div>
-          <div className={styles.stepText}>대피 후엔 어떻게 해야할까?</div>
+          <div className={styles.stepText}>1단계</div>
+          <div className={styles.stepText}>어디서 불이 났는지 알아볼까?</div>
         </div>
       </div>
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>다시선택하기</div>
+          <div className={styles.stepText}>닫혀있어</div>
         </div>
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
-          <div className={styles.stepText}>다음 →</div>
+          <div className={styles.stepText}>난 여기야! →</div>
         </div>
       </div>
 
@@ -291,39 +242,20 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              계단을 이용해서<br />
-              건물 밖으로 대피 후엔<br />
-              어떻게 해야할까?
+              화면을 클릭해서<br />
+              햄찌가 있는 곳을 찾아보자!
             </p>
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
+        {showRetryMessage && (
+          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
+            <div className={styles.alertBox}>
+              다시 한 번 시도해볼까?
+            </div>
+          </div>
+        )}
       </div>
-    <div className={styles.actionPromptText}>
-        세 가지 중에 햄찌가 해야할 행동을 골라볼까?
-      </div>
-
-      {/* 액션 카드 3개 */}
-      <div className={styles.actionCardWrapper}>
-        <div className={styles.actionCard}>
-          <img className={styles.actionImage} src="/images/시나리오/선택문/119신고하기.png" alt="" />
-          <div className={styles.actionButton}>
-            <div className={styles.actionButtonText}>119 신고하기</div>
-          </div>
-        </div>
-        <div className={styles.actionCard}>
-          <img className={styles.actionImage} src="/images/시나리오/선택문/불이야외치기.png" alt="" />
-          <div className={styles.actionButtonOrange}>
-            <div className={styles.actionButtonTextOrange}>불이야!하고 외치기</div>
-          </div>
-        </div>
-        <div className={styles.actionCard}>
-          <img className={styles.actionImage} src="/images/시나리오/선택문/도움요청하기.png" alt="" />
-          <div className={styles.actionButton}>
-            <div className={styles.actionButtonText}>도움 요청하기</div>
-          </div>
-        </div>
-      </div>  
     </div>
   );
 };

@@ -68,9 +68,9 @@ export default function Room360() {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('../Scenario02_1');
+            navigate('../Scenario0201');
           } else if (box.cls === 2) {
-            navigate('../Scenario02_2');
+            navigate('../Scenario0202');
           } else if (box.cls === 3) {
             navigate('../Scenario03');
           }

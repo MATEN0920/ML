@@ -17,29 +17,29 @@ function isInsideBox(yaw, pitch, box) {
   return Math.abs(yaw - byaw) < w / 2 && Math.abs(pitch - bpitch) < h / 2;
 }
 
-const Entrance = () => {
+const Kitchen = () => {
   const pannellumRef = useRef(null);
   const [boxes, setBoxes] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     // 라벨 파일 불러오기
-    fetch(process.env.PUBLIC_URL + '/result/entrance_360.txt')
+    fetch(process.env.PUBLIC_URL + '/result/kitchen_360.txt')
       .then((res) => res.text())
       .then((text) => setBoxes(parseLabels(text)));
   }, []);
 
   useEffect(() => {
     if (!window.pannellum) return;
-    const viewer = window.pannellum.viewer('entrance-pan', {
+    const viewer = window.pannellum.viewer('kitchen-pan', {
       type: "equirectangular",
-      panorama: process.env.PUBLIC_URL + "/result/entrance.jpg",
+      panorama: process.env.PUBLIC_URL + "/result/kitchen.jpg",
       autoLoad: true,
       hfov: 120,
       minHfov: 60,
-      maxHfov: 130,
+      maxHfov: 140,
       pitch: 0,
-      yaw: 250,
+      yaw: 0,
       compass: true,
       autoRotate: 0,
       minPitch: -50, // 아래로 최대 각도 (기본값: -90)
@@ -61,7 +61,9 @@ const Entrance = () => {
         if (isInsideBox(upYaw, upPitch, box)) {
           found = true;
           if (box.cls === 1) {
-            navigate('../Scenario19');
+            navigate('../Scenario14');
+          } else if (box.cls === 2) {
+            navigate('../Scenario1404');
           }
           break;
         }
@@ -70,7 +72,7 @@ const Entrance = () => {
 
     // cleanup
     return () => {
-      const panDiv = document.getElementById('entrance-pan');
+      const panDiv = document.getElementById('kitchen-pan');
       if (panDiv) panDiv.innerHTML = '';
     };
   }, [boxes, navigate]);
@@ -78,12 +80,12 @@ const Entrance = () => {
   return (
     <div>
       <div
-        id="entrance-pan"
+        id="kitchen-pan"
         ref={pannellumRef}
-        style={{ width: '100%', height: '500px', border: "none", boxShadow: "none" }} // 테두리 제거
+        style={{ width: '100%', height: '500px', border: '2px solid #aaa' }}
       />
     </div>
   );
 };
 
-export default Entrance;
+export default Kitchen;

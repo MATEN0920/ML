@@ -1,13 +1,14 @@
 import { css } from "@emotion/css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LivingRoom from "../module/LivingRoom";
-import  LivingRoom1 from '../module/LivingRoom1';
-import MainRoom from '../module/MainRoom';
-import Kitchen from '../module/Kitchen';
+import LivingRoom from "../module/LivingRoom2";
+import LivingRoom1 from '../module/LivingRoom1';
+import MainRoom from '../module/MainRoom1';
+import Kitchen from '../module/Kitchen1';
 import FirePage from '../module/FirePage';
-import HamzzyRoom from '../module/HamzzyRoom';
-import Entrance from '../module/Entrance';
+import HamzzyRoom from '../module/HamzzyRoom1';
+import Entrance from '../module/Entrance2';
+import Entrance1 from '../module/Entrance1';
 import Out from '../module/Out';
 
 
@@ -200,7 +201,6 @@ const Component1 = () => {
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
-    navigate("/scenario03");
   };
 
   const handleNotSureClick = () => {
@@ -210,7 +210,7 @@ const Component1 = () => {
   return (
     <div className={styles.container}>
       <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
-        <Kitchen />
+        <Entrance1 />
       </div>
       <div className={styles.profileBox}>
         <img className={styles.profileImage} src="/images/시나리오/객체/프로필사진.png" alt="" />
