@@ -194,10 +194,10 @@ const styles = {
 
 const Component1 = () => {
 	const [showRetryMessage, setShowRetryMessage] = useState(false);
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
-	const handleReadyClick = () => {
-	};
+	// const handleReadyClick = () => {
+	// };
 
 	const handleNotSureClick = () => {
 		setShowRetryMessage(true);
@@ -227,11 +227,11 @@ const Component1 = () => {
 
 			<div className={styles.buttonWrapper}>
 				<div className={styles.buttonGray} onClick={handleNotSureClick}>
-					<div className={styles.stepText}>모르겠어</div>
+					<div className={styles.stepText}>힌트</div>
 				</div>
-				<div className={styles.buttonOrange} onClick={handleReadyClick}>
+				{/* <div className={styles.buttonOrange} onClick={handleReadyClick}>
 					<div className={styles.stepText}>다음 →</div>
-				</div>
+				</div> */}
 			</div>
 
 			<div className={styles.speechBubbleBox}>
@@ -247,7 +247,7 @@ const Component1 = () => {
 				{showRetryMessage && (
 					<div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
 						<div className={styles.alertBox}>
-							다음 버튼을 눌러줘!
+							선풍기 근처를 확인해보자!
 						</div>
 					</div>
 				)}

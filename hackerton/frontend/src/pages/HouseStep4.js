@@ -1,6 +1,7 @@
 // ✅ 스타일 정의
 import { css } from "@emotion/css";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const styles = {
   span: css`
@@ -80,6 +81,26 @@ const styles = {
     justify-content: center;
     padding: 6.3px 9.4px;
     gap: 4.7px;
+  `,
+  roomNameInput: css`
+    width: 140px;
+    border-radius: 4.36px;
+    background-color: #fefefe;
+    border: 0.8px solid #8d94a0;
+    box-sizing: border-box;
+    padding: 6.3px 9.4px;
+    font-size: 10.18px;
+    color: #2098f3;
+    text-align: center;
+    outline: none;
+    
+    &:focus {
+      border-color: #2098f3;
+    }
+    
+    &::placeholder {
+      color: #8d94a0;
+    }
   `,
   image18Parent: css`
     width: 185px;
@@ -347,11 +368,94 @@ const styles = {
 };
 const Step024 = () => {
   const navigate = useNavigate();
+  const [extractedImages, setExtractedImages] = useState([]);
+  const [roomNames, setRoomNames] = useState({});
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const loadImages = async () => {
+      let sid = localStorage.getItem("session_id");
+      if (!sid) {
+        const date = new Date();
+        const dateStr = date.toISOString().slice(0, 10).replace(/-/g, "");
+        const random = Math.random().toString(36).substring(2, 8);
+        sid = `session_${dateStr}_${random}`;
+        localStorage.setItem("session_id", sid);
+      }
+
+      setExtractedImages([]);
+      setRoomNames({});
+      setLoading(true);
+
+      try {
+        const imageBasePath = `/images/door_room/${sid}/`;
+        const imageFiles = [];
+        const timestamp = Date.now();
+
+        // 최대 10개 이미지까지 탐색
+        for (let i = 1; i <= 10; i++) {
+          const imagePath = `${imageBasePath}door${i}.jpg?cache=${timestamp}`;
+          const cleanPath = `${imageBasePath}door${i}.jpg`;
+
+          try {
+            const response = await fetch(imagePath, {
+              method: 'HEAD',
+              cache: 'no-cache',
+              headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0',
+              },
+            });
+
+            const contentType = response.headers.get('Content-Type');
+            const contentLength = response.headers.get('Content-Length');
+
+            if (
+              response.ok &&
+              response.status === 200 &&
+              contentType?.startsWith("image/") &&
+              parseInt(contentLength || "0") > 1000
+            ) {
+              imageFiles.push(cleanPath);
+            } else {
+              break;
+            }
+          } catch (error) {
+            break;
+          }
+        }
+
+        setExtractedImages(imageFiles);
+        const initialNames = {};
+        imageFiles.forEach((_, index) => {
+          initialNames[index] = "";
+        });
+        setRoomNames(initialNames);
+      } catch (err) {
+        console.error("[ERROR] 이미지 로딩 실패:", err);
+      }
+
+      setLoading(false);
+    };
+
+    loadImages();
+  }, []);
+  
+  const handleRoomNameChange = (index, value) => {
+    setRoomNames(prev => ({
+      ...prev,
+      [index]: value
+    }));
+  };
+  
   const HouseStep3 = () => {
       navigate("/housestep3");
     };
   
     const HouseStep5 = () => {
+      // 방 이름들을 다음 단계로 전달할 수 있음
+      console.log('설정된 방 이름들:', roomNames);
       navigate("/housestep5");
     };
 
@@ -379,30 +483,33 @@ const Step024 = () => {
         </div>
 
         <div className={styles.frameParent}>
-          <div className={styles.image18Parent}>
-            <img className={styles.image18Icon} alt="" src="image 18.png" />
-            <div className={styles.guardianRelationshipLabelParent}>
-              <div className={styles.nextButtonLabel}>연결된 방 이름</div>
+          {loading ? (
+            <div>이미지를 불러오는 중...</div>
+          ) : extractedImages.length > 0 ? (
+            extractedImages.map((imageUrl, index) => (
+              <div key={index} className={styles.image18Parent}>
+                <img 
+                  className={styles.image18Icon} 
+                  alt={`door ${index + 1}`} 
+                  src={imageUrl}
+                />
+                <input
+                  className={styles.roomNameInput}
+                  type="text"
+                  placeholder="연결된 방 이름"
+                  value={roomNames[index] || ''}
+                  onChange={(e) => handleRoomNameChange(index, e.target.value)}
+                />
+              </div>
+            ))
+          ) : (
+            <div className={styles.image18Parent}>
+              <img className={styles.image18Icon} alt="" src="image 18.png" />
+              <div className={styles.guardianRelationshipLabelParent}>
+                <div className={styles.nextButtonLabel}>연결된 방 이름</div>
+              </div>
             </div>
-          </div>
-          <div className={styles.image20Parent}>
-            <img className={styles.image18Icon} alt="" src="image 20.png" />
-            <div className={styles.guardianRelationshipLabelParent}>
-              <div className={styles.nextButtonLabel}>연결된 방 이름</div>
-            </div>
-          </div>
-          <div className={styles.image18Parent}>
-            <img className={styles.image18Icon} alt="" src="image 21.png" />
-            <div className={styles.guardianRelationshipLabelParent}>
-              <div className={styles.nextButtonLabel}>연결된 방 이름</div>
-            </div>
-          </div>
-          <div className={styles.image19Parent}>
-            <img className={styles.image18Icon} alt="" src="image 19.png" />
-            <div className={styles.guardianRelationshipLabelParent}>
-              <div className={styles.nextButtonLabel}>연결된 방 이름</div>
-            </div>
-          </div>
+          )}
         </div>
 
         <div className={styles.navigation}>
@@ -423,7 +530,7 @@ const Step024 = () => {
             </div>
             <div className={styles.sidebarMessageContainer}>
               <b className={styles.guardianInfoHeader}>
-                거실에서는 4개의 문이 인식되었어요! 각 문이 어느 방과 연결되어있는지 선택해주세요
+                거실에서는 {extractedImages.length}개의 문이 인식되었어요! 각 문이 어느 방과 연결되어있는지 선택해주세요
               </b>
               <img className={styles.icon4} alt="" src="/images/곰/촬영소방곰.png" />
             </div>

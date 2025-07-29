@@ -109,7 +109,10 @@ const Login = () => {
 
 const HandleLogin = () => {
   if (!isLoginEnabled) return;
-  if (username === "admin" && password === "0000") {
+  const isAdmin = username === "admin" && password === "0000";
+  localStorage.setItem("username", username);
+
+  if (isAdmin) {
     navigate("/main");
   } else {
     navigate("/firemain");

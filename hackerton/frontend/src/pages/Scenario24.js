@@ -246,7 +246,7 @@ const Component1 = () => {
   };
 
   const handleNotSureClick = () => {
-    navigate("/scenario32");
+    navigate("/scenario23");
   };
   return (
 	<div className={styles.container}>
@@ -285,7 +285,7 @@ const Component1 = () => {
 			<p style={{ margin: 0 }}>
 			  잘했어! 소방관들이<br />
 			  도와주려면 우리집의<br />
-			  주소를 알려줘야해. 같이 외워볼까?
+			  주소를 알려줘야해. 같이 읽어볼까?
 			</p>
 		  </b>
 		</div>
@@ -303,15 +303,15 @@ const Component1 = () => {
 	{/* 🗣️ 첫 번째 따라읽기 카드 */}
 	<div className={`${styles.speechCard} ${styles.speechCard1}`} />
 	<b className={styles.speechCardText1}>거실 콘센트에서 불이 났어요!</b>
-	<div className={styles.speechCardLabel1}>따라읽어보세요</div>
+	<div className={styles.speechCardLabel1}>따라 읽어보세요</div>
 
 	{/* 🗣️ 두 번째 따라읽기 카드 */}
 	<div className={`${styles.speechCard} ${styles.speechCard2}`} />
 	<b className={styles.speechCardText2}>
-	우리집 주소는 경기도 시흥시 신천동<br />
-	신천고등학교 1동 202호이에요!
+	저희 집 주소는 경기도 시흥시 신천동<br />
+	신천고등학교 1동 202호이예요!
 	</b>
-	<div className={styles.speechCardLabel2}>따라읽어보세요</div>
+	<div className={styles.speechCardLabel2}>따라 읽어보세요</div>
 	</div>
   );
 };

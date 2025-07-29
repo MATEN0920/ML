@@ -11,7 +11,7 @@ def run(script, args=None):
 
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"[❌ ERROR] {script} failed:")
+        print(f"[ERROR] {script} failed:")
         print(result.stdout)
         print(result.stderr)
         raise subprocess.CalledProcessError(result.returncode, script_path)
@@ -52,3 +52,15 @@ subprocess.run([
     "python", "backend/scripts/yolo.py",
     equi_img_path, yolo_model, yolo_output_dir
 ], check=True)
+
+# ▶ Step 5: extract class 0 objects
+print("[PIPELINE] Extracting class 0 objects...")
+
+# 세션 디렉토리 추정: equi 이미지 경로 기준 (room1 까지 올라감)
+session_dir = os.environ.get("PIPELINE_SESSION_DIR")
+if not session_dir:
+    # equi_img_path = .../session_xxx/room1/result_equi.jpg
+    session_dir = os.path.dirname(equi_img_path)
+
+# 실행: extract_class0_objects.py
+run("extract_class0_objects.py", [session_dir])

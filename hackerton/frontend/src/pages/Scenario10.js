@@ -244,17 +244,42 @@ const styles = {
     color: #d6dbe2;
     text-align: left;
   `,
+        alertOverlay: css`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  `,
+  alertBox: css`
+    background-color: #fefefe;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 18px;
+    color: #363d47;
+    font-weight: 500;
+  `,
 };
 
 const Component1 = () => {
   const navigate = useNavigate();
+  const [showRetryMessage, setShowRetryMessage] = useState(false);
 
   const handleReadyClick = () => {
     navigate("/scenario11");
   };
 
   const handleNotSureClick = () => {
+    setShowRetryMessage(true);
   };
+
   return (
     <div className={styles.container}>
       <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
@@ -279,7 +304,7 @@ const Component1 = () => {
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>잘 모르겠어</div>
+          <div className={styles.stepText}>힌트</div>
         </div>
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>다음 →</div>
@@ -294,6 +319,13 @@ const Component1 = () => {
               이럴 땐 어떻게 해야할까?
             </p>
           </b>
+          {showRetryMessage && (
+          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
+            <div className={styles.alertBox}>
+              불을 끄려다 다칠 수 있으니까 먼저 피하는 게 중요해!
+            </div>
+          </div>
+          )}
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
       </div>

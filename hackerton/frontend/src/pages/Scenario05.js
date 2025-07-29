@@ -197,12 +197,12 @@ const styles = {
 const Component1 = () => {
   const navigate = useNavigate();
 
-  const handleReadyClick = () => {
-  };
+  // const handleReadyClick = () => {
+  // };
 
-  const handleNotSureClick = () => {
-    navigate("/scenario04");
-  };
+  // const handleNotSureClick = () => {
+  //   navigate("/scenario04");
+  // };
   return (
     <div className={styles.container}>
       <div style={{ width: "100vw", height: "80vh", position: "relative", zIndex: 1 }}>
@@ -226,14 +226,14 @@ const Component1 = () => {
         </div>
       </div>
 
-      <div className={styles.buttonWrapper}>
+      {/* <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray}>
           <div className={styles.stepText} onClick={handleNotSureClick}>이전</div>
         </div>
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>다음 →</div>
         </div>
-      </div>
+      </div> */}
 
       <div className={styles.speechBubbleBox}>
         <div className={styles.speechBubble}>

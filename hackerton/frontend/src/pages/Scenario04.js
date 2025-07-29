@@ -197,9 +197,9 @@ const Component1 = () => {
     navigate("/scenario05");
   };
 
-  const handleNotSureClick = () => {
-    setShowRetryMessage(true);
-  };
+  // const handleNotSureClick = () => {
+  //   setShowRetryMessage(true);
+  // };
 
   return (
     <div className={styles.container}>
@@ -224,9 +224,9 @@ const Component1 = () => {
       </div>
 
       <div className={styles.buttonWrapper}>
-        <div className={styles.buttonGray} onClick={handleNotSureClick}>
+        {/* <div className={styles.buttonGray} onClick={handleNotSureClick}>
           <div className={styles.stepText}>잘 모르겠어</div>
-        </div>
+        </div> */}
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>다음 →</div>
         </div>
@@ -244,13 +244,13 @@ const Component1 = () => {
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
-        {showRetryMessage && (
+        {/* {showRetryMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
             <div className={styles.alertBox}>
               다시 한 번 확인해볼까?
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

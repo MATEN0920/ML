@@ -1,9 +1,55 @@
-import { css } from "@emotion/css";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from 'react';
+import { css } from '@emotion/css';
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { getOrCreateSessionId } from '../utils/session';
 
-// ✅ 스타일 정의
+// 방별 색상
+const ROOM_COLORS = {
+  room1: '#FFBEBE',
+  room2: '#FFBC6F',
+  room3: '#FFF697',
+  room4: '#86E5AA',
+  room5: '#C2C1FF',
+  room6: '#DD9EFF',
+};
+
+const gridArea = css`
+  width: 720px;
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: center;
+  font-size: 12px;
+  color: #363d47;
+  margin: auto 16px auto;
+  overflow: auto;
+  border-radius: 12px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  padding: 0;
+`;
+
+const baseCellStyle = css`
+  width: 36px;
+  height: 36px;
+  outline: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  user-select: none;
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+  transition: background 0.2s, border 0.2s;
+`;
+
 const container = css`
-  width: 100%;
+  width: 1194px;
   position: relative;
   background-color: #f6f7f9;
   height: 834px;
@@ -34,6 +80,7 @@ const stepHeader = css`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-bottom: 8px;
 `;
 
 const stepCount = css`
@@ -65,95 +112,15 @@ const stepSubText = css`
   color: #2098f3;
 `;
 
-const scanArea = css`
-  width: 739px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  text-align: center;
-  font-size: 20.36px;
-  color: #bdc5d0;
-`;
-
-const scanBox = css`
-  align-self: stretch;
-  border-radius: 6px;
-  background-color: #f6f7f9;
-  border: 1px dashed #d6dbe2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-`;
-
-const imageContainer = css`
-  width: 706px;
-  height: 376px;
-  position: relative;
-`;
-
-const imageStyle = css`
-  position: absolute;
-  border-radius: 8.29px;
-  width: 222px;
-  height: 176px;
-  object-fit: contain;
-`;
-
-const largeImage = css`
-  position: absolute;
-  top: 2px;
-  left: 0px;
-  border-radius: 8.29px;
-  width: 300px;
-  height: 300px;
-  object-fit: contain;
-`;
-
-const boxOverlay = css`
-  position: absolute;
-  top: 1.22px;
-  left: 299.22px;
-  border-radius: 8.29px;
-  background-color: #eaecf0;
-  border: 1.6px solid #8d94a0;
-  box-sizing: border-box;
-  width: 181.6px;
-  height: 373.6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 158.2px 29.8px;
-`;
-
-const buttonBox = css`
-  border-radius: 8.73px;
-  background-color: #f6f7f9;
-  border: 1.6px solid #bdc5d0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12.5px 18.8px;
-`;
-
-const scanButton = css`
-  width: 739px;
-  border-radius: 6px;
-  background-color: #eaecf0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 10px;
-  gap: 6px;
-  font-size: 16px;
-  color: #5d6673;
+const emptySpace = css`
+  height: 0px;
 `;
 
 const bottomNavStyle = css`
   align-self: stretch;
   display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   font-size: 18px;
   color: #fefefe;
@@ -162,7 +129,12 @@ const bottomNavStyle = css`
 const navBtnStyle = css`
   border-radius: 6px;
   background-color: #d6dbe2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding: 14px 20px;
+  cursor: pointer;
 `;
 
 const navBtnTextStyle = css`
@@ -199,26 +171,26 @@ const sidebarTopStyle = css`
 
 const sidebarHomeStyle = css`
   position: relative;
-font-size: 18px;
-letter-spacing: -0.01em;
-line-height: 140%;
-text-transform: capitalize;
-font-weight: 500;
-font-family: Pretendard;
-color: #363d47;
-text-align: left;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  line-height: 140%;
+  text-transform: capitalize;
+  font-weight: 500;
+  font-family: Pretendard;
+  color: #363d47;
+  text-align: left;
 `;
 
 const sidebarDescStyle = css`
   width: 100%;
-position: relative;
-font-size: 24px;
-letter-spacing: -0.01em;
-line-height: 135%;
-display: inline-block;
-font-family: Pretendard;
-color: #363d47;
-text-align: left;
+  position: relative;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  line-height: 135%;
+  display: inline-block;
+  font-family: Pretendard;
+  color: #363d47;
+  text-align: left;
 `;
 
 const sidebarStepListStyle = css`
@@ -251,65 +223,403 @@ const badgeStyle = (bg) => css`
   font-size: 13px;
 `;
 
+const inputStyle = css`
+  width: 70px;
+  height: 28px;
+  font-size: 11px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  padding: 4px 6px;
+  text-align: center;
+  font-weight: 500;
+  color: #666;
+  background: #f8f9fa;
+  outline: none;
+  cursor: text;
+
+  &::placeholder {
+    color: #c0c0c0;
+    font-size: 10px;
+  }
+
+  &:focus {
+    border: 2px solid #2098f3;
+    background: #fff;
+  }
+`;
+
 const sidebarImageStyle = css`
   width: 184px;
   height: 276px;
-position: relative;
-max-width: 100%;
-overflow: hidden;
-max-height: 100%;
-object-fit: cover;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  object-fit: cover;
 `;
 
-// ✅ 컴포넌트 JSX
-const Step024 = () => {
-    const navigate = useNavigate();
-  const HouseStep2 = () => {
-      navigate("/housestep2");
-    };
-  
-    const HouseStep4 = () => {
-      navigate("/housestep4");
-    };
+const GRID_WIDTH = 20;
+const GRID_HEIGHT = 10;
 
-    const FirstMain = () => {
-      navigate("/");
-    };
+function getRoomRects(roomMap) {
+  const roomRects = {};
+  for (const key in roomMap) {
+    const type = roomMap[key];
+    if (!type.startsWith('room')) continue;
+    if (!roomRects[type]) roomRects[type] = [];
+    const [x, y] = key.split(',').map(Number);
+    roomRects[type].push([x, y]);
+  }
+  const result = {};
+  for (const type in roomRects) {
+    const coords = roomRects[type];
+    const xs = coords.map(([x]) => x);
+    const ys = coords.map(([, y]) => y);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+    const centerX = Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
+    const centerY = Math.round(ys.reduce((a, b) => a + b, 0) / ys.length);
+    result[type] = { minX, maxX, minY, maxY, center: [centerX, centerY] };
+  }
+  return result;
+}
+
+const HouseStep3 = () => {
+  const navigate = useNavigate();
+  const [sessionId] = useState(() => getOrCreateSessionId());
+  const [roomMap, setRoomMap] = useState({});
+  const [roomNames, setRoomNames] = useState({});
+  const [roomImages, setRoomImages] = useState({});
+  const [tempNames, setTempNames] = useState({});
+
+  useEffect(() => {
+    const saved = localStorage.getItem('roomMap');
+    let parsed = {};
+    if (saved) {
+      parsed = JSON.parse(saved);
+    } else {
+      parsed = {
+        '2,2': 'room1', '3,2': 'room1', '4,2': 'room1',
+        '2,3': 'room1', '3,3': 'room1', '4,3': 'room1',
+        '6,2': 'room2', '7,2': 'room2', '6,3': 'room2', '7,3': 'room2',
+        '2,5': 'room3', '3,5': 'room3', '4,5': 'room3',
+        '2,6': 'room3', '3,6': 'room3', '4,6': 'room3',
+        '6,5': 'room4', '7,5': 'room4', '6,6': 'room4', '7,6': 'room4',
+      };
+    }
+    setRoomMap(parsed);
+    const names = {};
+    Object.values(parsed).forEach((type) => {
+      if (type.startsWith('room') && !names[type]) {
+        names[type] = '';
+      }
+    });
+    setRoomNames(names);
+    setTempNames(names);
+  }, []);
+
+  const handleNameChange = (type, newName) => {
+    setRoomNames((prev) => ({ ...prev, [type]: newName }));
+  };
+  const handleTempNameChange = (type, tempName) => {
+    setTempNames((prev) => ({ ...prev, [type]: tempName }));
+  };
+  const handleNameSave = (type) => {
+    const tempName = tempNames[type];
+    if (tempName && tempName.trim()) {
+      handleNameChange(type, tempName.trim());
+    }
+  };
+
+  const handleImageUpload = async (type, file) => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('roomType', type);
+    formData.append('sessionId', sessionId);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/upload`,
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+      const result = response.data;
+      if (response.status === 200 && result.success) {
+        setRoomImages((prev) => ({
+          ...prev,
+          [type]: {
+            file,
+            filename: result.filename,
+            path: result.path,
+            originalName: file.name,
+          },
+        }));
+        alert(`${type} 파일 업로드 및 처리 완료!`);
+      } else {
+        alert('업로드 실패: ' + (result?.error || JSON.stringify(result)));
+      }
+    } catch (err) {
+      alert('서버 연결 중 오류 발생: ' + err.message);
+    }
+  };
+
+  const roomRects = getRoomRects(roomMap);
+
+  // 격자 렌더링
+  const renderGrid = () => (
+    <div className={gridArea}>
+      {Array.from({ length: GRID_HEIGHT }).map((_, y) => (
+        <div key={y} style={{ display: 'flex' }}>
+          {Array.from({ length: GRID_WIDTH }).map((_, x) => {
+            const key = `${x},${y}`;
+            const type = roomMap[key];
+            // 방 사각형 정보
+            let border = '';
+            let bgColor = '#fff';
+
+            if (type && type.startsWith('room') && roomRects[type]) {
+              const { minX, maxX, minY, maxY } = roomRects[type];
+              // 테두리
+              if (x === minX) border += 'border-left:3px solid #2098f3;';
+              if (x === maxX) border += 'border-right:3px solid #2098f3;';
+              if (y === minY) border += 'border-top:3px solid #2098f3;';
+              if (y === maxY) border += 'border-bottom:3px solid #2098f3;';
+              bgColor = ROOM_COLORS[type] || '#f8f9fa';
+            }
+
+            return (
+              <div
+                key={key}
+                className={baseCellStyle}
+                style={{
+                  background: bgColor,
+                  position: 'relative',
+                  ...(border ? { border: 'none', boxShadow: 'none' } : {}),
+                  ...(border
+                    ? { boxSizing: 'border-box', ...borderStringToObj(border) }
+                    : {}),
+                }}
+              ></div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+
+  // border 스타일 문자열을 객체로 변환
+  function borderStringToObj(borderStr) {
+    const obj = {};
+    borderStr.split(';').forEach((b) => {
+      if (!b.trim()) return;
+      const [prop, value] = b.split(':');
+      obj[prop.trim()] = value.trim();
+    });
+    return obj;
+  }
+
+  // 첨부파일 입력 UI (격자 아래에 배치)
+  const renderFileInputs = () => (
+    <div
+      style={{
+        width: 720,
+        margin: '20px auto 0 auto',
+        display: 'flex',
+        gap: 16,
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+      }}
+    >
+      {Object.keys(roomRects).map((type) =>
+        type.startsWith('room') ? (
+          <div
+            key={type}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: '12px 8px',
+              backgroundColor: '#fff',
+              borderRadius: '8px',
+              border: '1px solid #e8e8e8',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              width: '80px',
+              height: '110px',
+              position: 'relative',
+              gap: '8px',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow =
+                '0 4px 12px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+            }}
+          >
+            {/* 색상 원 */}
+            <div
+              style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                backgroundColor: ROOM_COLORS[type] || '#f8f9fa',
+                border: 'none',
+                flexShrink: 0,
+              }}
+            />
+
+            {/* 방 이름 표시 */}
+            {type === 'room1' ? (
+              // 거실은 고정된 텍스트로 표시
+              <div
+                style={{
+                  width: '70px',
+                  height: '28px',
+                  fontSize: '11px',
+                  borderRadius: '4px',
+                  border: '1px solid #e0e0e0',
+                  padding: '4px 6px',
+                  textAlign: 'center',
+                  fontWeight: '500',
+                  color: '#666',
+                  backgroundColor: '#f8f9fa',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxSizing: 'border-box',
+                }}
+              >
+                거실
+              </div>
+            ) : (
+              // 다른 방들은 입력 가능
+              <input
+                type="text"
+                className={inputStyle}
+                value={tempNames[type] || roomNames[type] || ''}
+                placeholder={(() => {
+                  switch (type) {
+                    case 'room2':
+                      return 'ex) 거실';
+                    case 'room3':
+                      return 'ex) 거실';
+                    case 'room4':
+                      return 'ex) 거실';
+                    case 'room5':
+                      return 'ex) 거실';
+                    case 'room6':
+                      return 'ex) 거실';
+                    default:
+                      return `ex) 방${type.replace('room', '')}`;
+                  }
+                })()}
+                onChange={(e) => handleTempNameChange(type, e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleNameSave(type);
+                    e.target.blur();
+                  }
+                }}
+                onBlur={() => handleNameSave(type)}
+              />
+            )}
+
+            {/* 파일 선택 버튼 */}
+            <button
+              style={{
+                width: '70px',
+                height: '28px',
+                border: 'none',
+                borderRadius: '4px',
+                background: roomImages[type] ? '#ff6b4a' : '#ff6b4a',
+                color: 'white',
+                fontSize: '10px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '3px',
+                transition: 'all 0.2s',
+              }}
+              onClick={() => {
+                document.getElementById(`file-${type}`).click();
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#e55a42';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#ff6b4a';
+              }}
+            >
+              <img
+                src={
+                  roomImages[type]
+                    ? '/images/아이콘/재선택.png'
+                    : '/images/아이콘/선택.png'
+                }
+                alt=""
+                style={{
+                  width: '12px',
+                  height: '12px',
+                  filter: 'brightness(0) invert(1)', // 아이콘을 흰색으로 변환
+                }}
+              />
+              <span>{roomImages[type] ? '재선택' : '선택'}</span>
+            </button>
+
+            <input
+              id={`file-${type}`}
+              type="file"
+              accept="image/*,video/*"
+              style={{ display: 'none' }}
+              onChange={(e) => handleImageUpload(type, e.target.files[0])}
+            />
+          </div>
+        ) : null
+      )}
+    </div>
+  );
+
+  // 네비게이션
+  const goPrev = () => navigate('/housestep2');
+  const goNext = () => navigate('/housestep4');
+  const goHome = () => navigate('/');
+
   return (
     <div className={container}>
       <div className={mainCard}>
-        <div className={stepHeader}>
-          <div className={stepCount}>
-            <b>3</b>
-            <span className={stepTotal}>/4</span>
-          </div>
-          <div className={stepTitle}>
-            <b className={stepTitleText}>촬영할 공간을 선택하고 스캔해주세요</b>
-            <div className={stepSubText}>
-              * 스캔 전 주의사항 : 화재 위험 요소나 소화전이 잘 보이도록 정리해주세요
+        <div>
+          <div className={stepHeader}>
+            <div className={stepCount}>
+              <b>3</b>
+              <span className={stepTotal}>/4</span>
             </div>
-          </div>
-        </div>
-
-        <div className={scanArea}>
-          <div className={scanBox}>
-            <div className={imageContainer}>
-              <img className={imageStyle} style={{ top: "2px", left: "480px" }} src="Frame 2085669432.png" alt="" />
-              <img className={imageStyle} style={{ top: "178px", left: "480px" }} src="Frame 2085669436.png" alt="" />
-              <div className={boxOverlay}>
-                <div className={buttonBox}>거실</div>
+            <div className={stepTitle}>
+              <b className={stepTitleText}>
+                격자 결과 확인 및 방 이름/이미지 등록
+              </b>
+              <div className={stepSubText}>
+                * 각 방/문/창문에 이름과 이미지를 등록할 수 있습니다.
               </div>
-              <img className={largeImage} src="Frame 2085669434.png" alt="" />
             </div>
           </div>
-          <div className={scanButton}>영상 촬영하기</div>
+          <div className={emptySpace} />
+          {renderGrid()}
+          {renderFileInputs()}
         </div>
 
         <div className={bottomNavStyle}>
-          <div className={navBtnStyle} onClick={HouseStep2}>
+          <div className={navBtnStyle} onClick={goPrev}>
             <div className={navBtnTextStyle}>←</div>
           </div>
-          <div className={navBtnStyle} onClick={HouseStep4}>
+          <div className={navBtnStyle} onClick={goNext}>
             <div className={navBtnTextStyle}>다음 →</div>
           </div>
         </div>
@@ -317,14 +627,19 @@ const Step024 = () => {
 
       <div className={sidebarStyle}>
         <div className={sidebarContentStyle}>
-          <div className={sidebarTopStyle} onClick={FirstMain}>
+          <div className={sidebarTopStyle} onClick={goHome}>
             <div className={sidebarHomeStyle}>← 홈으로</div>
             <div className={sidebarDescStyle}>
               <b>
-                화재 대피 훈련을 진행할<br />
+                화재 대피 훈련을 진행할
+                <br />
                 장소에 대해 곰곰소방단 에게 알려주세요!
               </b>
-              <img src="/images/곰/촬영소방곰.png" alt="" className={sidebarImageStyle} />
+              <img
+                src="/images/곰/촬영소방곰.png"
+                alt=""
+                className={sidebarImageStyle}
+              />
             </div>
           </div>
 
@@ -348,7 +663,9 @@ const Step024 = () => {
             <div className={stepActiveStyle}>
               <div style={{ display: 'flex', gap: 12 }}>
                 <div>03</div>
-                <div style={{ fontWeight: 600, color: '#0f1114' }}>집 공간 스캔하기</div>
+                <div style={{ fontWeight: 600, color: '#0f1114' }}>
+                  집 공간 스캔하기
+                </div>
               </div>
               <div className={badgeStyle('#fff0ec')}>진행중</div>
             </div>
@@ -367,4 +684,4 @@ const Step024 = () => {
   );
 };
 
-export default Step024;
+export default HouseStep3;

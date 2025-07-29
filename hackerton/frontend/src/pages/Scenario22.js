@@ -195,8 +195,8 @@ const Component1 = () => {
     navigate("/scenario23");
   };
 
-  const handleNotSureClick = () => {
-  };
+//   const handleNotSureClick = () => {
+//   };
   
   return (
 	<div className={styles.container}>
@@ -221,9 +221,9 @@ const Component1 = () => {
 	  </div>
 
 	  <div className={styles.buttonWrapper}>
-		<div className={styles.buttonGray} onClick={handleNotSureClick}>
+		{/* <div className={styles.buttonGray} onClick={handleNotSureClick}>
 		  <div className={styles.stepText}>이전</div>
-		</div>
+		</div> */}
 		<div className={styles.buttonOrange} onClick={handleReadyClick}>
 		  <div className={styles.stepText}>다음 →</div>
 		</div>
@@ -233,7 +233,7 @@ const Component1 = () => {
 		<div className={styles.speechBubble}>
 		  <b className={styles.speechText}>
 			<p style={{ margin: 0 }}>
-			  그 다음엔 불이 난 상황을 정확하게<br />
+			  신고할 때에는 불이 난 상황을 정확하게<br />
 			  알려야해. 먼저, 어디서 불이 났는지<br />
 			  차근차근 말해보자!
 			</p>

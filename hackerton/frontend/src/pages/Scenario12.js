@@ -249,13 +249,18 @@ const styles = {
 };
 
 const Component1 = () => {
-  const [showRetryMessage, setShowRetryMessage] = useState(false);
-  const [showNextMessage, setShowNextMessage] = useState(false);
+  const [ShowTextMessage, setShowTextMessage] = useState(false);
+    const [showRetryMessage, setShowRetryMessage] = useState(false);
+    const [showNextMessage, setShowNextMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleReadyClick = () => {
     navigate("/scenario13");
   };
+
+  const handleTextClick =() => {
+    setShowTextMessage(true);
+  }
 
   const handleNotSureClick = () => {
     setShowRetryMessage(true);
@@ -289,9 +294,9 @@ const Component1 = () => {
 
 	  <div className={styles.buttonWrapper}>
 		<div className={styles.buttonGray} onClick={handleNotSureClick}>
-		  <div className={styles.stepText}>잘 모르겠어</div>
+		  <div className={styles.stepText}>힌트</div>
 		</div>
-		<div className={styles.buttonOrange} onClick={handleNotSureClick}>
+		<div className={styles.buttonOrange} onClick={handleSureClick}>
 		  <div className={styles.stepText}>다음 →</div>
 		</div>
 	  </div>
@@ -307,14 +312,21 @@ const Component1 = () => {
 		  {showRetryMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
             <div className={styles.alertBox}>
-				행동상자를 클릭해보자!
+              집 안에서 불이 났으니깐 안전하게 집 밖으로 나가자!
             </div>
           </div>
           )}
           {showNextMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowNextMessage(false)}>
             <div className={styles.alertBox}>
-				다시생각해보자!
+              행동상자를 선택해줘!
+            </div>
+          </div>
+          )}
+          {ShowTextMessage && (
+          <div className={styles.alertOverlay} onClick={() => setShowTextMessage(false)}>
+            <div className={styles.alertBox}>
+              다시 생각해보자!
             </div>
           </div>
           )}
@@ -329,13 +341,13 @@ const Component1 = () => {
 	  <div className={styles.actionCardWrapper}>
 		<div className={styles.actionCard}>
 		  <img className={styles.actionImage} src="/images/시나리오/선택문/선택햄찌방.png" alt="" />
-		  <div className={styles.actionButton} onClick={handleSureClick}>
+		  <div className={styles.actionButton} onClick={handleTextClick}>
 			<div className={styles.actionButtonText}>햄찌방</div>
 		  </div>
 		</div>
 		<div className={styles.actionCard}>
 		  <img className={styles.actionImage} src="/images/시나리오/선택문/선택화장실문.png" alt="" />
-		  <div className={styles.actionButton} onClick={handleSureClick}>
+		  <div className={styles.actionButton} onClick={handleTextClick}>
 			<div className={styles.actionButtonText}>화장실</div>
 		  </div>
 		</div>

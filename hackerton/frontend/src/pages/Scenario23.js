@@ -247,6 +247,7 @@ const Component1 = () => {
   };
 
   const handleNotSureClick = () => {
+	navigate("/scenario22");
   };
 
   return (
@@ -284,7 +285,7 @@ const Component1 = () => {
 		<div className={styles.speechBubble}>
 		  <b className={styles.speechText}>
 			<p style={{ margin: 0 }}>
-			  그 다음엔 불이 난 상황을 정확하게<br />
+			  신고할 때에는 불이 난 상황을 정확하게<br />
 			  알려야해. 먼저, 어디서 불이 났는지<br />
 			  차근차근 말해보자!
 			</p>
@@ -304,7 +305,7 @@ const Component1 = () => {
 	{/* 🗣️ 첫 번째 따라읽기 카드 */}
 	<div className={`${styles.speechCard} ${styles.speechCard1}`} />
 	<b className={styles.speechCardText1}>거실 콘센트에서 불이 났어요!</b>
-	<div className={styles.speechCardLabel1}>따라읽어보세요</div>
+	<div className={styles.speechCardLabel1}>따라 읽어보세요</div>
 	</div>
   );
 };

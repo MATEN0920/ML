@@ -10,6 +10,7 @@ import HouseStep2 from "./pages/HouseStep2";
 import HouseStep3 from "./pages/HouseStep3";
 import HouseStep4 from "./pages/HouseStep4";
 import HouseStep5 from "./pages/HouseStep5";
+import HouseStep501 from "./pages/HouseStep501";
 import SecondMain from "./pages/SecondMain";
 import ThirdMain from "./pages/ThirdMain";
 import Scenario01 from "./pages/Scenario01";
@@ -64,6 +65,7 @@ function App() {
         <Route path="/housestep3" element={<HouseStep3 />} />
         <Route path="/housestep4" element={<HouseStep4 />} />
         <Route path="/housestep5" element={<HouseStep5 />} />
+        <Route path="/housestep501" element={<HouseStep501 />} />
         <Route path="/main" element={<SecondMain />} />
         <Route path="/firemain" element={<ThirdMain />} />
         <Route path="/scenario01" element={<Scenario01 />} />

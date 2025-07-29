@@ -231,7 +231,7 @@ const Component1 = () => {
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>닫혀있어</div>
+          <div className={styles.stepText}>힌트</div>
         </div>
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>난 여기야! →</div>
@@ -251,7 +251,7 @@ const Component1 = () => {
         {showRetryMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
             <div className={styles.alertBox}>
-              다시 한 번 시도해볼까?
+              화면을 클릭하여 햄찌방으로 들어가자!
             </div>
           </div>
         )}

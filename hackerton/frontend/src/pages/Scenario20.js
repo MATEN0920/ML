@@ -266,6 +266,7 @@ const Component1 = () => {
   };
 
   const handleNotSureClick = () => {
+    navigate("/scenario18");
   };
 
   return (

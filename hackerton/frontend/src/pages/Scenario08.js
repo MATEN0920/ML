@@ -205,9 +205,9 @@ const Component1 = () => {
     navigate("/scenario09");
   };
 
-  const handleNotSureClick = () => {
-    setShowRetryMessage(true);
-  };
+  // const handleNotSureClick = () => {
+  //   setShowRetryMessage(true);
+  // };
   return (
     <div className={styles.container}>
       <img className={styles.backgroundImage} src="/images/시나리오/배경/콘센트시나리오기본배경.png" alt="" />
@@ -231,9 +231,9 @@ const Component1 = () => {
       </div>
 
       <div className={styles.buttonWrapper}>
-        <div className={styles.buttonGray} onClick={handleNotSureClick}>
+        {/* <div className={styles.buttonGray} onClick={handleNotSureClick}>
           <div className={styles.stepText}>잘 모르겠어</div>
-        </div>
+        </div> */}
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>다음 →</div>
         </div>
@@ -243,7 +243,7 @@ const Component1 = () => {
         <div className={styles.speechBubble}>
           <b className={styles.speechText}>
             <p style={{ margin: 0 }}>
-              이런 불이 번지고 있어.<br />
+              이런! 불이 번지고 있어.<br />
               이럴 땐 어떻게 해야할까?
             </p>
           </b>
@@ -252,13 +252,13 @@ const Component1 = () => {
       </div>
 
       <img className={styles.maskImage} src="/images/시나리오/객체/화재포착.png" alt="" />
-      {showRetryMessage && (
+      {/* {showRetryMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
             <div className={styles.alertBox}>
               다음 버튼을 눌러줘.
             </div>
           </div>
-        )}
+        )} */}
     </div>
   );
 };

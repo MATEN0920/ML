@@ -211,8 +211,8 @@ const Component1 = () => {
     navigate("/scenario12");
   };
 
-  const handleNotSureClick = () => {
-  };
+  // const handleNotSureClick = () => {
+  // };
 
   return (
     <div className={styles.container}>
@@ -237,9 +237,9 @@ const Component1 = () => {
       </div>
 
       <div className={styles.buttonWrapper}>
-        <div className={styles.buttonGray} onClick={handleNotSureClick}>
+        {/* <div className={styles.buttonGray} onClick={handleNotSureClick}>
           <div className={styles.stepText}>잘 모르겠어</div>
-        </div>
+        </div> */}
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>다음 →</div>
         </div>

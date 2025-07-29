@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const styles = {
   container: css`
@@ -243,17 +244,40 @@ const styles = {
 	color: #d6dbe2;
 	text-align: left;
   `,
+    alertOverlay: css`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  `,
+  alertBox: css`
+    background-color: #fefefe;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 18px;
+    color: #363d47;
+    font-weight: 500;
+  `,
 };
 
 const Component1 = () => {
 	const navigate = useNavigate();
+	const [showRetryMessage, setShowRetryMessage] = useState(false);
 
   const handleReadyClick = () => {
     navigate("/scenario17");
   };
 
   const handleNotSureClick = () => {
-    navigate("/scenario15");
+    setShowRetryMessage(true);
   };
   return (
 	<div className={styles.container}>
@@ -279,7 +303,7 @@ const Component1 = () => {
 
 	  <div className={styles.buttonWrapper}>
 		<div className={styles.buttonGray} onClick={handleNotSureClick}>
-		  <div className={styles.stepText}>이전</div>
+		  <div className={styles.stepText}>힌트</div>
 		</div>
 		<div className={styles.buttonOrange} onClick={handleReadyClick}>
 		  <div className={styles.stepText}>다음 →</div>
@@ -293,6 +317,13 @@ const Component1 = () => {
 			  1층으로 어떻게 대피해야할까?
 			</p>
 		  </b>
+		  {showRetryMessage && (
+          <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
+            <div className={styles.alertBox}>
+              불이 나면 전기가 끊겨 엘리베이터가 멈출 수 있고, 창문으로 뛰어내리면 높아서 다칠 수 있어!
+            </div>
+          </div>
+          )}
 		</div>
 		<img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
 	  </div>

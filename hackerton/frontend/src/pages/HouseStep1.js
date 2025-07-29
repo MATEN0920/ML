@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 
 const wrapperStyle = css`width: 1194px; position: relative; background-color: #f6f7f9; height: 834px; overflow: hidden; text-align: left; font-size: 18px; color: #363d47; font-family: Pretendard;`;
 
@@ -126,18 +126,33 @@ const dropdownBoxStyle = (isSelected) => css`
   outline: none;
 `;
 
+const getOrCreateSessionId = () => {
+  let sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    const now = new Date();
+    const yyyymmdd = `${now.getFullYear()}${(now.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
+    const random = Math.random().toString(36).substring(2, 8);
+    sessionId = `session_${yyyymmdd}_${random}`;
+    localStorage.setItem("sessionId", sessionId);
+  }
+  return sessionId;
+};
+
 const Step021Default = () => {
   const navigate = useNavigate();
   const [address, setAddress] = useState('');
   const [floor, setFloor] = useState('');
   const [houseType, setHouseType] = useState('');
-
+  const sessionId = useState(() => getOrCreateSessionId())[0];
   const isNextEnabled = address.trim() !== '' && floor.trim() !== '' && houseType !== '';
-
+  useEffect(() => {
+      console.log("🧾 사용 중인 sessionId:", sessionId);
+    }, [sessionId]);
   const Loading1 = () => {
     navigate("/loading1");
   };
-
   const HouseStep2 = () => {
     navigate("/housestep2");
   };

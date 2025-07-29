@@ -1,36 +1,37 @@
-import { css } from "@emotion/css";
-import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { css } from '@emotion/css';
+import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 // 방별 색상 정의
 const ROOM_COLORS = {
-  room1: "#f9dcdc",
-  room2: "#fef5b2",
-  room3: "#fbd9a4",
-  room4: "#d7efe5",
-  room5: "#d7efe5",
-  room6: "#c7dcee",
+  room1: '#FFBEBE',
+  room2: '#FFBC6F',
+  room3: '#FFF697',
+  room4: '#86E5AA',
+  room5: '#C2C1FF',
+  room6: '#DD9EFF',
 };
 
 const TOOL_TYPES = [
-  { key: "room1", label: "방 1", color: ROOM_COLORS.room1 },
-  { key: "room2", label: "방 2", color: ROOM_COLORS.room2 },
-  { key: "room3", label: "방 3", color: ROOM_COLORS.room3 },
-  { key: "room4", label: "방 4", color: ROOM_COLORS.room4 },
-  { key: "room5", label: "방 5", color: ROOM_COLORS.room5 },
-  { key: "room6", label: "방 6", color: ROOM_COLORS.room6 },
+  { key: 'room1', label: '거실', color: ROOM_COLORS.room1 },
+  { key: 'room2', label: '방 2', color: ROOM_COLORS.room2 },
+  { key: 'room3', label: '방 3', color: ROOM_COLORS.room3 },
+  { key: 'room4', label: '방 4', color: ROOM_COLORS.room4 },
+  { key: 'room5', label: '방 5', color: ROOM_COLORS.room5 },
+  { key: 'room6', label: '방 6', color: ROOM_COLORS.room6 },
+  { key: 'eraser', label: '지우개', color: '#f8f9fa' },
 ];
 
 const GRID_WIDTH = 20;
-const GRID_HEIGHT = 20;
+const GRID_HEIGHT = 10;
 
 const toolBtnStyle = (color, active) => css`
   padding: 6px 18px;
   font-size: 15px;
   border: none;
   border-radius: 6px;
-  background-color: ${active ? "#007bff" : color};
-  color: ${active ? "#fff" : "#232323"};
+  background-color: ${active ? '#007bff' : color};
+  color: ${active ? '#fff' : '#232323'};
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
@@ -64,9 +65,9 @@ const gridBox = css`
   background: #fff;
   border-radius: 12px;
   border: 1.5px solid #e0e0e0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   width: 720px;
-  height: 720px;
+  height: 360px;
   margin-bottom: 32px;
   overflow: hidden;
   display: flex;
@@ -99,7 +100,7 @@ const mainContentStyle = css`
   height: 754px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 32px;
   box-sizing: border-box;
 `;
@@ -223,14 +224,26 @@ const sidebarImageStyle = css`
 `;
 // --- 사이드바 스타일 끝 ---
 
-const Cell = ({ x, y, placedItem, isPreview, selectedTool, dragging, onMouseDown, onMouseEnter, onMouseUp }) => {
+const Cell = ({
+  x,
+  y,
+  placedItem,
+  isPreview,
+  selectedTool,
+  dragging,
+  onMouseDown,
+  onMouseEnter,
+  onMouseUp,
+}) => {
   // 방 색상 적용
   const backgroundColor =
     isPreview && dragging
-      ? "#f0f8ff"
+      ? selectedTool === 'eraser'
+        ? '#ffebee' // 지우개 미리보기: 연한 빨간색
+        : '#f0f8ff' // 일반 도구 미리보기: 연한 파란색
       : placedItem && ROOM_COLORS[placedItem]
       ? ROOM_COLORS[placedItem]
-      : "#fff";
+      : '#fff';
 
   return (
     <div
@@ -240,31 +253,43 @@ const Cell = ({ x, y, placedItem, isPreview, selectedTool, dragging, onMouseDown
       onMouseEnter={() => onMouseEnter(x, y)}
       onMouseUp={() => onMouseUp(x, y)}
     >
-      {placedItem && placedItem.startsWith("room") && `방 ${placedItem.slice(-1)}`}
+      {placedItem &&
+        TOOL_TYPES.find((tool) => tool.key === placedItem)?.label}
     </div>
   );
 };
 
 const HouseStep2 = () => {
   const navigate = useNavigate();
-  const [selectedTool, setSelectedTool] = useState("room1");
+  const [selectedTool, setSelectedTool] = useState('room1');
   const [placedItems, setPlacedItems] = useState({});
   const [dragStart, setDragStart] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [previewCells, setPreviewCells] = useState([]);
 
   useEffect(() => {
-    localStorage.removeItem("roomMap");
-    setPlacedItems({});
-  }, []);
+  // 기존 roomMap 데이터가 있으면 불러오기
+  const savedRoomMap = localStorage.getItem('roomMap');
+  if (savedRoomMap) {
+    try {
+      const parsedData = JSON.parse(savedRoomMap);
+      setPlacedItems(parsedData);
+    } catch (error) {
+      console.error('저장된 roomMap 데이터 로드 실패:', error);
+      // 파싱 실패 시 초기화
+      localStorage.removeItem('roomMap');
+      setPlacedItems({});
+    }
+  }
+}, []);
 
   const handleSaveAndNext = () => {
-    localStorage.setItem("roomMap", JSON.stringify(placedItems));
-    navigate("/housestep3");
+    localStorage.setItem('roomMap', JSON.stringify(placedItems));
+    navigate('/housestep3');
   };
 
   const handlePrev = () => {
-    navigate("/housestep1");
+    navigate('/housestep1');
   };
 
   const calculateRectangle = (x1, y1, x2, y2) => {
@@ -298,7 +323,13 @@ const HouseStep2 = () => {
     setPlacedItems((prev) => {
       const newItems = { ...prev };
       for (const key of affectedCells) {
-        newItems[key] = selectedTool;
+        if (selectedTool === 'eraser') {
+          // 지우개인 경우 해당 셀을 삭제
+          delete newItems[key];
+        } else {
+          // 일반 방인 경우 배치
+          newItems[key] = selectedTool;
+        }
       }
       return newItems;
     });
@@ -312,14 +343,19 @@ const HouseStep2 = () => {
       {/* 사이드바 추가 */}
       <div className={sidebarStyle}>
         <div className={sidebarContentStyle}>
-          <div className={sidebarTopStyle} onClick={() => navigate("/")}>
+          <div className={sidebarTopStyle} onClick={() => navigate('/')}>
             <div className={sidebarHomeStyle}>← 홈으로</div>
             <div className={sidebarDescStyle}>
               <b>
-                화재 대피 훈련을 진행할<br />
+                화재 대피 훈련을 진행할
+                <br />
                 장소에 대해 곰곰소방단 에게 알려주세요!
               </b>
-              <img src="/images/곰/촬영소방곰.png" alt="" className={sidebarImageStyle} />
+              <img
+                src="/images/곰/촬영소방곰.png"
+                alt=""
+                className={sidebarImageStyle}
+              />
             </div>
           </div>
           <div className={sidebarStepListStyle}>
@@ -333,7 +369,9 @@ const HouseStep2 = () => {
             <div className={stepActiveStyle}>
               <div style={{ display: 'flex', gap: 12 }}>
                 <div>02</div>
-                <div style={{ fontWeight: 600, color: '#0f1114' }}>집 전개도 등록하기</div>
+                <div style={{ fontWeight: 600, color: '#0f1114' }}>
+                  집 전개도 등록하기
+                </div>
               </div>
               <div className={badgeStyle('#fff0ec')}>진행중</div>
             </div>
@@ -357,22 +395,33 @@ const HouseStep2 = () => {
       {/* 메인 컨텐츠 */}
       <div className={mainContentStyle}>
         {/* 단계 표시 추가 */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 32 }}>
-          <div style={{ letterSpacing: "-0.01em", lineHeight: "135%" }}>
-            <b style={{ color: "#e85b38" }}>2</b>
-            <span style={{ fontWeight: 600, color: "#8d94a0" }}>/4</span>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+            marginBottom: 32,
+          }}
+        >
+          <div style={{ letterSpacing: '-0.01em', lineHeight: '135%' }}>
+            <b style={{ color: '#e85b38' }}>2</b>
+            <span style={{ fontWeight: 600, color: '#8d94a0' }}>/4</span>
           </div>
-          <div style={{ fontSize: 24, color: "#232323" }}>
-            <b style={{ letterSpacing: "-0.01em", lineHeight: "135%" }}>집의 전개도를 그려주세요</b>
-            <div style={{
-              fontSize: 16,
-              letterSpacing: "-0.01em",
-              lineHeight: "140%",
-              textTransform: "capitalize",
-              fontWeight: 500,
-              color: "#2098f3",
-              marginTop: 4
-            }}>
+          <div style={{ fontSize: 24, color: '#232323' }}>
+            <b style={{ letterSpacing: '-0.01em', lineHeight: '135%' }}>
+              집의 전개도를 그려주세요
+            </b>
+            <div
+              style={{
+                fontSize: 16,
+                letterSpacing: '-0.01em',
+                lineHeight: '140%',
+                textTransform: 'capitalize',
+                fontWeight: 500,
+                color: '#2098f3',
+                marginTop: 4,
+              }}
+            >
               *아래의 도형을 오른쪽으로 끌어 전개도를 완성해주세요
             </div>
           </div>

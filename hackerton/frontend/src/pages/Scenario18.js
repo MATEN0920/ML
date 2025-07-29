@@ -183,12 +183,12 @@ const styles = {
   `,
   actionButton: css`
     border-radius: 4.36px;
-    background-color: white;
+    background-color: rgba(254, 254, 254, 0.5);
     border: 1.5px solid #8d94a0;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 14px 20px;
+    padding: 10px 20px;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.2s, color 0.2s;
@@ -209,7 +209,7 @@ const styles = {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 14px 20px;
+    padding: 10px 20px;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     transition: background-color 0.2s, color 0.2s;
@@ -302,7 +302,7 @@ const Component1 = () => {
 
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonGray} onClick={handleNotSureClick}>
-          <div className={styles.stepText}>잘 모르겠어</div>
+          <div className={styles.stepText}>힌트</div>
         </div>
         <div className={styles.buttonOrange} onClick={handleNextClick}>
           <div className={styles.stepText}>다음 →</div>
@@ -318,7 +318,8 @@ const Component1 = () => {
           </b>
           {showRetryMessage && (
             <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
-              <div className={styles.alertBox}>행동상자를 클릭해보자!</div>
+              <div className={styles.alertBox}>밖으로 안전하게 대피했다면, 이제 주변에 알리고,<br />
+              119에 신고하거나 어른들에게 도움을 요청해야해!</div>
             </div>
           )}
         </div>

@@ -185,9 +185,9 @@ const Component1 = () => {
     navigate("/scenario02");
   };
 
-  const handleNotSureClick = () => {
-    setShowRetryMessage(true);
-  };
+  // const handleNotSureClick = () => {
+  //   setShowRetryMessage(true);
+  // };
 
   useEffect(() => {
     localStorage.setItem("scenarioStartTime", new Date().toISOString());
@@ -216,9 +216,9 @@ const Component1 = () => {
       </div>
 
       <div className={styles.buttonWrapper}>
-        <div className={styles.buttonGray} onClick={handleNotSureClick}>
+        {/* <div className={styles.buttonGray} onClick={handleNotSureClick}>
           <div className={styles.stepText}>잘 모르겠어</div>
-        </div>
+        </div> */}
         <div className={styles.buttonOrange} onClick={handleReadyClick}>
           <div className={styles.stepText}>준비 됐어! →</div>
         </div>
@@ -234,13 +234,13 @@ const Component1 = () => {
           </b>
         </div>
         <img className={styles.triangleImage} src="/images/시나리오/객체/말풍선삼각형.png" alt="" />
-        {showRetryMessage && (
+        {/* {showRetryMessage && (
           <div className={styles.alertOverlay} onClick={() => setShowRetryMessage(false)}>
             <div className={styles.alertBox}>
               주위를 둘러볼까?<br/>준비됐어! 버튼을 눌러보자!
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
