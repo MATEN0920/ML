@@ -8,4 +8,3 @@
 - Web VR Viewer
 ## Object Detection
 - YOLOv5
-
