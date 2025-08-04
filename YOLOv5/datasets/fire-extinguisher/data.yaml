@@ -1,0 +1,13 @@
+train: C:/Users/yjyoo/YOLOv5/datasets/fire-extinguisher/train/images
+val: C:/Users/yjyoo/YOLOv5/datasets/fire-extinguisher/valid/images
+test: C:/Users/yjyoo/YOLOv5/datasets/fire-extinguisher/test/images
+
+nc: 1
+names: ['fire_extinguisher']
+
+roboflow:
+  workspace: evcharger
+  project: fireextinguisher-xz74b
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/evcharger/fireextinguisher-xz74b/dataset/1
