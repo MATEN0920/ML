@@ -2,7 +2,7 @@
 ## SRCNN
 ## TTS(Text to Speech)
 - https://github.com/MATEN0920/TTS
-# Hackerton
+# 세종 DX 해커톤
 ## Image Stitching
 - Video Frame Extraction
 - Web VR Viewer
