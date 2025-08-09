@@ -8,3 +8,4 @@
 - Web VR Viewer
 ## Object Detection
 - YOLOv5
+## 소방안전 빅데이터 공모전
