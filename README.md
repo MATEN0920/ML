@@ -6,3 +6,5 @@
 - https://github.com/MATEN0920/GomGom-Sobangdan
 ## 소방안전 빅데이터 공모전
 - https://github.com/MATEN0920/Sobang
+## 종합설계
+- https://github.com/ai7287/Capstone-Design
