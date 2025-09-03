@@ -1,5 +1,6 @@
 # Machine Learning Code
 ## SRCNN
+## AI Report Generation
 ## TTS(Text to Speech)
 - https://github.com/MATEN0920/TTS
 ## 세종 DX 해커톤
@@ -8,4 +9,3 @@
 - https://github.com/MATEN0920/Sobang
 ## 종합설계
 - https://github.com/ai7287/Capstone-Design
-## AI 리포트
