@@ -1,7 +1,7 @@
 # Machine Learning Code
 ## SRCNN
 ## Image Stitching
-## AI Report Generation
+## AI Report Generation(Chat GPT 5-mini)
 ## YOLOv5
 ## TTS(Text to Speech)
 - https://github.com/MATEN0920/TTS
