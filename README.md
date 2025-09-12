@@ -2,7 +2,7 @@
 ## SRCNN
 ## Image Stitching
 ## AI Report Generation(Chat GPT 5-mini)
-## YOLOv5
+## Object Dectection(YOLOv5)
 ## TTS(Text to Speech)
 - https://github.com/MATEN0920/TTS
 ## 세종 DX 해커톤
