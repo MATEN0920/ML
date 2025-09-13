@@ -1,6 +1,6 @@
 # Machine Learning Code
 ## SRCNN
-## Image Stitching
+## Image Stitching(OpenCV)
 ## AI Report Generation(Chat GPT 5-mini)
 ## Object Dectection(YOLOv5)
 ## TTS(Text to Speech)
