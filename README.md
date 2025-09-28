@@ -1,4 +1,3 @@
-# Machine Learning Code
 ## SRCNN
 ## Image Stitching(OpenCV)
 ## AI Report Generation(using Chat GPT 5-mini API)
