@@ -1,5 +1,5 @@
 ## Image Stitching(OpenCV)
-## SRCNN
+## SRCNN(Super Resolution Convolutional Neural Network)
 ## AI Report Generation(using Chat GPT 5-mini API)
 ## Object Dectection(YOLOv5)
 ## TTS(Text to Speech)
